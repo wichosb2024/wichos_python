@@ -1,0 +1,28 @@
+{% load static%}
+{% block css %}
+ 	<link rel="stylesheet" type="text/css" href="{% static "css/cssA.css" %}">
+ 	<script type="text/javascript" src="/static/js/scriptA.js"></script>
+ {% endblock css %}
+{%block contenido%}
+ <div class="contenedor2">
+            <div id="contenido2">
+                 <div id="principal">
+ 	<div id="izquierda">
+        <h3>Mes {{Mes.nombre}}</h3>
+        <h3>Total {{Mes.total}}</h3>
+        <hr>
+        <h2>Agregar Transaccion</h2>
+<form method="POST" action="{% url 'gerente:gestmes' idMes %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="boton3" type="submit">Guardar</button>
+</form>
+
+
+    </div>
+                 </div>
+
+            </div>
+ </div>
+
+{%endblock contenido%}

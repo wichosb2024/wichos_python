@@ -1,0 +1,16 @@
+{% load static%}
+{% block css %}
+ 	<link rel="stylesheet" type="text/css" href="{% static "css/cssA.css" %}">
+ {% endblock css %}
+
+ <div class="contenedor2">
+            <div id="contenido2">
+	<form action="{%url 'caja:terminarVenta' pedido.id %}" method="POST">
+		<label><h1>Confirmar pedido</h1> </label>
+		{%csrf_token%}
+		{{form.as_p}}
+		<input type="hidden" name="cuenta" value="{{cuentas}}">
+		<button CLASS="boton" type="submit">Guardar</button>
+	</form>
+</div>
+ </div>

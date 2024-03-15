@@ -1,0 +1,118 @@
+{%block contenido%}
+
+<link rel="stylesheet" type="text/css" href="/static/css/cocina.css"/>
+
+<script>
+setTimeout('document.location.reload()',5000);
+</script>
+<div id="pestanas">
+	<table id="nose">
+		<tbody>
+
+
+			<tr>
+				{% for pedido in  pedidos%}
+					{%if pedido.pedido.paraLlevar == False %}
+						<td class="contenedor" height="300px" width="260px">
+							<table style="width:auto;">
+								<tbody>
+									{% if pedido.pedido.prioridad == True %}
+										<h3 align="center" style="background-color:#EEA990;">PRIORIDAD</h3>
+									{% endif %}
+									{% if pedido.pedido.modificado == True %}
+										<h3 align="center" style="background-color:#EEA990;">MODIFICADO</h3>
+									{% endif %}
+									{% if pedido.pedido.fkCuenta.fkMesa == null %}
+										<h3 align="center" >(Aqui)Cliente : {{pedido.pedido.fkCuenta.cliente}}</h3>
+									{% else %}
+										<h3 align="center" >(Aqui)Mesa : {{pedido.pedido.fkCuenta.fkMesa.id}}</h3>
+									{% endif %}
+									{% for linea in pedido.lineas %}
+									{% if linea.fkProducto.fkCategoriaProducto.cocinaNormal == True %}
+										<tr>
+											{% if linea.modificado == True %}
+												<td style='font-weight: bold; background-color:orange; font-size:20px;'>{{linea.cantidad}}-</td>
+											{% else %}
+												<td style='font-weight: bold; font-size:20px;'>{{linea.cantidad}}-</td>
+											{% endif %}
+											<td style='font-weight: bold; font-size:20px; '>
+												{{linea.fkProducto.abreviatura}}
+											</td>
+											{% if linea.cebollaBase > 0 and linea.cebolla < 1 and linea.fkProducto.cebolla == True %}
+												<td style='font-weight: bold;'><p>{{linea.cebollaBase}} Con </p></td>
+											{% elif linea.cebolla > 0 %}
+												<td style='font-weight: bold;'><p style="background-color:orange;">{{linea.cebolla}} Cebolla EXTRA </p></td>
+											{% endif %}
+											{% if linea.aguacate > 0 %}
+												<td style='font-weight: bold;'><p style="background-color:orange;">{{linea.aguacate}} Aguacate EXTRA </p></td>
+											{% else %}
+												<td style='font-weight: bold;'> </td>
+											{% endif %}
+										</tr>
+									{% endif %}
+									{% endfor %}
+								</tbody>
+							</table>
+							<p><h4>Comentario: {{pedido.pedido.comentarios}}  </h4></p></td>
+						</td>
+					{%endif%}
+				{% endfor %}
+			</tr>
+
+
+
+			<tr>
+				{% for pedido in  pedidos%}
+					{%if pedido.pedido.paraLlevar == True %}
+						<td class="contenedor2" height="300px" width="260px">
+							<table style="width:auto;">
+								<tbody>
+									{% if pedido.pedido.prioridad == True %}
+										<h3 align="center" style="background-color:#EEA990;">PRIORIDAD</h3>
+									{% endif %}
+									{% if pedido.pedido.modificado == True %}
+										<h3 align="center" style="background-color:#EEA990;">MODIFICADO</h3>
+									{% endif %}
+									{% if pedido.pedido.fkCuenta.delivery == True %}
+										<h3 align="center" style="background-color:#D50FD2;">DELIVERY</h3>
+									{% endif %}
+									{% if pedido.pedido.fkCuenta.fkMesa == null %}
+										<h3 align="center" >(Llevar)Cliente : {{pedido.pedido.fkCuenta.cliente}}</h3>
+									{% else %}
+										<h3 align="center" >(Llevar)Mesa : {{pedido.pedido.fkCuenta.fkMesa.id}}</h3>
+									{% endif %}
+									{% for linea in pedido.lineas %}
+									{% if linea.fkProducto.fkCategoriaProducto.cocinaNormal == True %}
+										<tr>
+											{% if linea.modificado == True %}
+												<td style='font-weight: bold; background-color:orange; font-size:20px;'>{{linea.cantidad}}-</td>
+											{% else %}
+												<td style='font-weight: bold; font-size:20px;'>{{linea.cantidad}}-</td>
+											{% endif %}
+											<td style='font-weight: bold; font-size:20px; '>
+												{{linea.fkProducto.abreviatura}}
+											</td>
+											{% if linea.cebollaBase > 0 and linea.cebolla < 1 and linea.fkProducto.cebolla == True %}
+												<td style='font-weight: bold;'><p>{{linea.cebollaBase}} Con </p></td>
+											{% elif linea.cebolla > 0 %}
+												<td style='font-weight: bold;'><p style="background-color:orange;">{{linea.cebolla}} Cebolla EXTRA </p></td>
+											{% endif %}
+											{% if linea.aguacate > 0 %}
+												<td style='font-weight: bold;'><p style="background-color:orange;">{{linea.aguacate}} Aguacate EXTRA </p></td>
+											{% else %}
+												<td style='font-weight: bold;'> </td>
+											{% endif %}
+										</tr>
+									{% endif %}
+									{% endfor %}
+								</tbody>
+							</table>
+							<p><h4>Comentario: {{pedido.pedido.comentarios}}  </h4></p></td>
+						</td>
+					{%endif%}
+				{% endfor %}
+			</tr>
+		</tbody>
+	</table>
+</div>
+{%endblock contenido%}

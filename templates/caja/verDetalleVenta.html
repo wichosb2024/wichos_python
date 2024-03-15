@@ -1,0 +1,205 @@
+{%extends "base/base.html"%}
+<link rel="stylesheet" type="text/css" href="/static/css/ABCwin.css"/>
+<script type="text/javascript" src="/static/js/ABCwin.js"></script>
+<script type="text/javascript" src="/static/js/cambio.js"></script>
+
+{%block inicio%}
+<li style="float:right" class="inicio"><a href="{%  url "caja:indexcajero"%}">Inicio</a></li>
+{%endblock inicio%}
+
+
+
+
+{%block contenido%}
+	<link rel="stylesheet" type="text/css" href="/static/css/ABCwin.css"/>
+	<link rel="stylesheet" type="text/css" href="/static/css/estilo.css"/>
+	<script type="text/javascript" src="/static/js/ABCwin.js"></script>
+	<script type="text/javascript" src="/static/js/imprimir.js"></script>
+	<div class="contenedor">
+        <div id="pestanas">
+            <ul id="lista" >
+                    Detalle de la Cuenta {{cuentas.id}}
+            </ul>
+        </div>
+        <div id="contenidopdestanas">
+            <div id="cpestana1">
+				<div id="display" style="overflow-y: auto">
+					{% if cuentas.fkMesa == null %}
+						<h3>Cliente : {{cuentas.cliente}}</h3>
+					{% else %}
+						<h3>Mesa : {{cuentas.fkMesa.id}}</h3>
+					{% endif %}
+					{% if cuentas.delivery == True %}
+						<h3>Dirección : {{cuentas.direccion}}</h3>
+						<h3>Telefono : {{cuentas.telefono}}</h3>
+					{% endif %}
+	
+					{% if control == False %}
+						<a href="{% url 'caja:editar' cuentas.id%}" ><button class="boton">Editar cuenta</button> </a>
+					{% endif %}	
+					<a href="{% url 'caja:impresion' cuentas.id %}"><button onclick="printDiv('FACTURA')" class="boton">Imprimir Factura</button> </a>
+					{%if cuentas.naturaleza == False%}
+
+					<a href="{% url 'caja:reasignarMesa' cuentas.id%}" rel="get:id=10" rev="abcwin[500,auto]" ><button class="boton">Reasignar mesa</button> </a>
+
+			{%if cuentas.delivery == False%}
+				<a href="{% url 'caja:rein' cuentas.id%}" rel="get:id=10" rev="abcwin[500,auto]"><button class="boton">Agregar pedido</button> </a>
+			{%endif%}
+		{%elif cuentas.delivery == False%}
+				<a href="{% url 'caja:cvrl' cuentas.id %}"><button class="boton">Agregar pedido</button></a>
+		{%endif%}
+					<table id="tablepe" class="tablepe table-bordered" border="1" bgcolor="white">
+						<thead>
+							<tr>
+								<td>Hora/Pedido</td>
+								<td>Nombre</td>
+								<td>Cantidad</td>
+								<td>Cebolla</td>
+								<td>Total</td>
+							</tr>
+						</thead>
+						<tbody>
+							{% for pedido in pedidos %}
+							{% if pedido.subtotal > 0 %}
+								<tr>
+									<td style="background-color:powderblue;">{{ pedido.horaPedido}}</td>
+									{% if pedido.cobrado%}
+										<td style="background-color:powderblue;">COBRADO</td>
+									{% else %}
+										<td style="background-color:powderblue;">PENDIENTE</td>
+									{% endif %}
+								</tr>
+								{% for linea in lineas %}
+									{% if linea.fkPedido.id == pedido.id and linea.cancelado == False%}
+										<tr>
+											<td style='border: inset 0pt'></td>
+											<td style='border: inset 0pt'>{{linea.fkProducto.nombreProd}}</td>
+											<td style='border: inset 0pt'>{{linea.cantidad}}</td>
+												{% if linea.cebollaBase > 0 %}
+													<td>{{linea.cebollaBase}}</td>
+												{% else %}
+													<td>0</td>
+												{% endif %}
+											<td style='border: inset 0pt'>$ {{linea.subtotal}}</td>
+										</tr>
+									{% endif %}
+								{% endfor %}
+							{% endif %}
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div>
+			<h3  style="background-color:lightgreen;">Total a pagar :
+
+			<SCRIPT>
+					var total = 0;
+							{% for pedido in pedidos %}
+							{% if pedido.cobrado == False and pedido.cancelado == False and pedido.fkCuenta.id == cuentas.id and pedido.subtotal > 0 %}
+							{% for linea in lineas %}
+							{% if linea.cancelado == False and linea.fkPedido.id == pedido.id %}
+							total = total + {{linea.subtotal}};
+							{% endif %}
+							{% endfor %}
+							{% endif %}
+							{% endfor %}
+
+							document.write('$'+total.toFixed(2));
+
+				</SCRIPT>
+
+			</h3>
+
+				{%block cobro%}
+					{% if cuentas.final == False and servido == True%}
+						<a href="{% url 'caja:validar' cuentas.id%}" rel="get:id=10" rev="abcwin[500,auto]"><button class="boton">Cobrar</button> </a>
+					{% endif %}
+				{%endblock cobro%}
+
+				{%block cupon%}
+					{% if cuentas.final == False %}
+						<a href="{% url 'caja:descuento' cuentas.id%}" rel="get:id=10" rev="abcwin[500,auto]"><button class="boton">Aplicar cupon</button> </a>
+					{% endif %}
+				{%endblock cupon%}
+		</div>
+	</div>
+
+<div id ="FACTURA" align="center" class="FACTURA" style="display:none">
+	<H3 align="center" style="font-family:arial; font-weight:bold; ">Restaurante Wicho Burger</H3>
+	<h4 align="center" style="font-family:arial; font-weight:bold;">San Martín</h4>
+	<h4 align="center" style="font-family:arial; font-weight:bold;">Fecha: {{cuentas.fechaCuenta}} {{cuentas.horaCuenta}}</h4>
+	<h3 align="center" style="font-weight:bold;">Atendido Por : {{cuentas.fkMesero}}</h3>
+	{% if cuentas.fkMesa == null %}
+	<h3 align="center" style="font-weight:bold;">Cliente : {{cuentas.cliente}}</h3>
+	{% else %}
+	<h3 align="center" style="font-weight:bold;">Mesa : {{cuentas.fkMesa.id}}</h3>
+	{% endif %}
+	{% if cuentas.delivery == True %}
+	<h3 align="center" style="font-weight:bold;">Dirección : {{cuentas.direccion}}</h3>
+	<h3 align="center" style="font-weight:bold;">Telefono : {{cuentas.telefono}}</h3>
+	{% endif %}
+
+	<div align="center">
+		<tr align="center">
+			<td align="center" style="font-weight:bold;">| Nombre </td>
+			<td align="center" style="font-weight:bold;">| Precio </td>
+			<td align="center" style="font-weight:bold;">| Cantidad </td>
+			<td align="center" style="font-weight:bold;">| Sub-Total </td>
+
+		</tr>
+	</div>
+
+
+   <table align="center" id="tablepd" class="factura table-bordered" border="0">
+
+	<tbody >
+
+	{% for pedido in pedidos %}
+	{% if pedido.fkCuenta.id == cuentas.id and pedido.cobrado == False%}
+	{% for linea in lineas %}
+	{% if linea.fkPedido.id == pedido.id and pedido.cancelado == False and linea.cancelado == False%}
+			<tr align="center">
+				<td align="center" style='border: inset 0pt; font-weight:bold; font-size:20px;'>{{linea.fkProducto.nombreProd}}</td>
+				<td align="center" style='border: inset 0pt; font-weight:bold; font-size:15px;'>$ {{linea.fkProducto.precio}}</td>
+				<td align="center" style='border: inset 0pt; font-weight:bold; font-size:20px;'>|{{linea.cantidad}}|</td>
+				<td align="center" style='border: inset 0pt; font-weight:bold; font-size:15px;'>$ {{linea.subtotal}}</td>
+			</tr>
+	{% endif %}
+	{% endfor %}
+
+	{% endif %}
+	{% endfor %}
+
+	</tbody>
+</table>
+<div>
+<h3 align="center" style="font-family:arial; font-weight:bold;">Total a pagar :
+
+<SCRIPT>
+					var total = 0;
+							{% for pedido in pedidos %}
+							{% if pedido.cobrado == False and pedido.cancelado == False and pedido.fkCuenta.id == cuentas.id and pedido.subtotal > 0 %}
+							{% for linea in lineas %}
+							{% if linea.cancelado == False and linea.fkPedido.id == pedido.id %}
+							total = total + {{linea.subtotal}};
+							{% endif %}
+							{% endfor %}
+							{% endif %}
+							{% endfor %}
+
+							document.write('$'+total.toFixed(2));
+
+				</SCRIPT>
+</h3>
+	<p align="Center" style="font-family:arial; font-weight:bold;">¡Gracias, vuelva pronto! :)</p>
+</div>
+
+</div>
+
+
+
+
+{%endblock contenido%}
+

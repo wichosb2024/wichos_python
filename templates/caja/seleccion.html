@@ -1,0 +1,21 @@
+{%block logout%}
+{%endblock logout%}
+{%block contenido%}
+{%load static%}
+<link rel="stylesheet" type="text/css" href="{% static "css/cssE.css" %}">
+
+<div id="Contenedor">
+	<div>
+		<h1 class="opcioncontra">Creación de pedido reincidente</h1>
+	</div>
+	<div>
+		<a href="{% url 'caja:cvrl' cuenta.id %}"><button class="boton">Para llevar</button></a>
+	</div>
+	{%if cuenta.naturaleza == False%}
+	<div>
+		<a href="{% url 'caja:cvra' cuenta.id %}"><button class="boton">Para comer aqui</button></a>
+	</div>
+	{%endif%}
+</div>
+
+{%endblock contenido%}

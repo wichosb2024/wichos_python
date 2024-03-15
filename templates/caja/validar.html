@@ -1,0 +1,16 @@
+{%block logout%}
+{%endblock logout%}
+{%block contenido%}
+{%load static%}
+<link rel="stylesheet" type="text/css" href="{% static "css/cssE.css" %}">
+<div id="Contenedor">
+	<a href="javascript: history.go(-1)"><button class="boton">Volver</button> </a>
+	<form method="post" action="{% url 'caja:validar' idCuenta%}"> 
+	{% csrf_token %}
+	<h1 class="opcioncontra">Desea efectuar el cobro?</h1>
+	<button class="boton" type="submit">Confirmar</button>
+	</form>
+	
+</div>
+
+{%endblock contenido%}

@@ -1,0 +1,8 @@
+<div>
+	<form action="{%url 'caja:eliminarLinea' linea %}" method="POST">
+		<label><h1>Confirmar eliminación </h1> </label>
+		{%csrf_token%}
+		{{form.as_p}}
+		<button type="submit">Guardar</button>
+	</form>
+</div>

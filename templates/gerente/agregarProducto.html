@@ -1,0 +1,26 @@
+{% load static%}
+{% block css %}
+ 	<link rel="stylesheet" type="text/css" href="{% static "css/cssA.css" %}">
+ 	<script type="text/javascript" src="/static/js/scriptA.js"></script>
+ {% endblock css %}
+{%block contenido%}
+ <div class="contenedor2">
+            <div id="contenido2">
+                 <div id="principal">
+ 	<div id="izquierda">
+
+
+        <form method="POST" action="{% url 'gerente:agregarProduct' %}">
+            {% csrf_token %}
+			{{form.as_p}}
+            <div align="center"><button  class="boton3">Guardar</button></div>
+        </form>
+
+
+    </div>
+                 </div>
+
+            </div>
+ </div>
+
+{%endblock contenido%}

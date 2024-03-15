@@ -1,0 +1,155 @@
+{%extends "base/baseadmin.html"%}
+{% block nav %}
+<header id="header" class="header fixed-top">
+	<div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+		<a href="{% url 'gerente:indexger' %}" class="logo d-flex align-items-center">
+			<img src="assets/img/logo.png" alt="">
+			<span>Wichos's Burger</span>
+		</a>
+  </div>
+</header>
+{% endblock nav %}
+{%block contenido%}
+<style type="text/css">
+
+*,
+*:before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-size: 18px;
+  margin: 0;
+  padding: 50;
+}
+
+html,
+body {
+  display: block;
+}
+
+.centered-elements {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  padding: 100px;
+}
+
+.btn {
+    padding:10px;
+  position: relative;
+  display: block;
+  height: 77px;
+  width: 300px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  background-color: solid;
+  color: #000;
+  font-size: 18px;
+  overflow: hidden;
+  transition: all 500ms ease;
+  border: 2px solid #20e2d7;
+  margin-bottom: 40px;
+  z-index: 0;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: auto;
+  background-color: #20e2d7;
+  transition: all 500ms ease;
+  z-index: -1;
+}
+.btn--1::before {
+  width: 0;
+  height: 100%;
+}
+.btn--1:hover {
+  color: #434343;
+}
+.btn--1:hover::before {
+  width: 100%;
+}
+
+@keyframes shadow-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(32, 226, 215, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 8px 16px rgba(32, 226, 215, 0);
+  }
+}
+  }
+.contright{
+
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+}
+</style>
+
+<div class="content centered-elements">
+  <div class="cont">
+    <a href="{%  url "gerente:generador"%}">
+      <button class="btn btn--1">
+        Generar cupones
+      </button>
+    </a>
+    <a href="{%  url "gerente:proddiarios2"%}">
+      <button class="btn btn--1">
+        Productos vendidos en el dia
+      </button>
+    </a>
+    <a href="{%  url "gerente:verventa"%}">
+      <button class="btn btn--1">
+        Ver ventas
+      </button>
+    </a>
+  </div>
+  <div class="contright">
+    <a href="{%  url "gerente:registrs"%}">
+      <button class="btn btn--1">
+        Transacciones diarias
+      </button>
+    </a>
+    <a href="{%  url "gerente:verinve"%}">
+      <button class="btn btn--1">
+        Ver inventario
+      </button>
+    </a>
+    <a href="{%  url "gerente:meseros"%}">
+      <button class="btn btn--1">
+        Personal
+      </button>
+    </a>
+  </div>
+  <div>
+    <a href="{% url 'gerente:categorias' %}">
+      <button class="btn btn--1">
+        Categorías de productos
+        </button>
+    </a>
+    <a href="{% url "gerente:prodc" %}">
+      <button class="btn btn--1">
+       Productos
+      </button>
+    </a>
+    <a href="{%  url "ingreso:logout"%}">
+      <button class="btn btn--1">
+        Salir
+      </button>
+    </a>
+  </div>
+</div>
+
+{%endblock contenido%}

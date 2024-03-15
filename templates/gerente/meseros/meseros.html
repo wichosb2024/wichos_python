@@ -1,0 +1,76 @@
+{%extends "base/baseadmin.html"%}
+{% block contenido %}
+<a href="{% url 'gerente:registroMesero' %}" >
+    <button class="boton">
+        Agregar
+    </button>
+</a>
+    <table id="tabla2" class="blueTable table-bordered" border="1" bgcolor="white">
+        <thead>
+            <tr>
+                <td >
+                    nombre
+                </td>
+                <td>
+                    usuario
+                </td>
+                <td>
+                    Tipo de usuario
+                </td>
+                <td>
+                    Fecha creado
+                </td>
+                <td>
+                    Acciones
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            {% if meseros %}
+            {% for mesero in meseros %}
+                <tr>
+                    <td>
+                        {{ mesero.first_name}} {{ mesero.last_name}}
+                    </td>                
+                    <td>
+                        {{ mesero.username}}
+                    </td>      
+                    <td>
+                       {% for grupo in mesero.groups.all %}
+                        {{grupo.name}}
+                       {% endfor %}
+                    </td>           
+                    <td>
+                        {{ mesero.date_joined}}
+                    </td>
+                    <td>
+                        <a href="{% url 'gerente:cambiarContrasenia' mesero.id %}" >
+                            <button class="boton">
+                                Cambiar contraseña
+                            </button>
+                        </a>
+                        <form id="eliminar" method="post" action="{% url 'gerente:eliminar_usuario' %}">
+                            {% csrf_token %}
+                            <input type="hidden" value='{{mesero.id}}' name="idUsuario">
+                            <button type="submit" class="boton" >Eliminar </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            {% else %}
+            <h3>No se han registrado meseros</h3>
+            {% endif %}
+        </tbody>
+    </table>
+    <script type="text/javascript">
+       (function() {
+         var form = document.getElementById('eliminar');
+         form.addEventListener('submit', function(event) {
+           if (!confirm('Realmente desea eliminar?')) {
+             event.preventDefault();
+           }
+         }, false);
+       })();
+     </script>
+{% endblock contenido %}
+  

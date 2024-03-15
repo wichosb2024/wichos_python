@@ -1,0 +1,69 @@
+
+{%block contenido%}
+<link rel="stylesheet" type="text/css" href="/static/css/ABCwin.css"/>
+<script type="text/javascript" src="/static/js/ABCwin.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/estilo.css"/>
+<div class="contenedor">
+    <a href="{% url 'gerente:adde' %}" rel="get:id=10" rev="abcwin[800,auto]"><button class="boton">Registrar Transaccion</button></a>
+    {% block botonEstado %}{% endblock botonEstado %}
+            <div id="pestanas">
+                <ul id=lista>
+                    <li id="pestana1"><a href='javascript:cambiarPestanna(pestanas,pestana1);'>Transacciones</a></li>
+                </ul>
+            </div>
+
+            <div id="contenidopestFanas">
+                <div id="cpestana1">
+
+                      <table id="tabla2" class="blueTable table-bordered" border="1" bgcolor="white">
+
+    	<thead>
+		    	<td>Hora</td>
+			    <td>Descripcion</td>
+			    <td>Tipo</td>
+                 <td>Monto</td>
+                <td>Accion</td>
+
+	    </thead>
+	    <tbody>
+
+        {% for transaccion in transacciones %}
+        {% if transaccion.fecha.day == dia.day and transaccion.fecha.month == dia.month and transaccion.fecha.year == dia.year %}
+        <tr>
+            <td>{{transaccion.fecha}}</td>
+            <td>{{transaccion.descripcion}}</td>
+            <td>
+                {% if transaccion.tipo == True %}
+                EGRESO
+                {% else %}
+                INGRESO
+                {% endif %}
+            </td>
+            <td>{{transaccion.monto}}</td>
+            <td><a href="{% url 'gerente:eliminarTransaccion' transaccion.id %}"><button class="boton2">eliminar</button> </a></td>
+
+
+        </tr>
+        {% endif %}
+        {% endfor %}
+
+        </tbody>
+                      </table>
+
+                    <HR>
+
+
+                    <hr>
+
+
+                </div>
+            </div>
+ </div>
+
+
+
+
+
+<P ALIGN="CENTER"><BUTTON><a href="{%  url "ingreso:logout"%}">Salir</a></BUTTON></P>
+
+{%endblock contenido%}

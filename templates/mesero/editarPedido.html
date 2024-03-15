@@ -1,0 +1,128 @@
+{%extends "mesero/inicio.html"%}
+{% load static%}
+{% block css %}
+ 	<link rel="stylesheet" type="text/css" href="{% static "css/cssB.css" %}">
+ 	<script type="text/javascript" src="/static/js/inicializar.js"></script>
+ 	<link rel="stylesheet" type="text/css" href="/static/css/ABCwin.css"/>
+	<script type="text/javascript" src="/static/js/ABCwin.js"></script>
+	<link rel="stylesheet" type="text/css" href="/static/css/estilo.css"/>
+ {% endblock css %}
+{%block refresh%}
+
+{%endblock refresh%}
+{%block contenido%}
+<!--
+{%if cuenta.naturaleza == False%}
+	{%if cuenta.delivery == False%}
+		<a href="{% url 'caja:rein' cuenta.id%}" rel="get:id=10" rev="abcwin[500,auto]"><button class="boton">Agregar pedido</button> </a>
+	{%endif%}
+{%else%}
+	{%if cuenta.delivery == False%}
+		<a href="{% url 'caja:cvrl' cuenta.id %}"><button class="boton">Agregar pedido</button></a>
+	{%endif%}
+{%endif%}
+-->
+<a href="{% url 'caja:cobrar' cuenta.id %}" ><button class="boton">Regresar al detalle</button> </a>
+<a href="{% url 'caja:eliminarCuenta' cuenta.id%}" rel="get:id=10" rev="abcwin[500,auto]" ><button class="boton">Borrar cuenta</button> </a>
+<block tabla>
+<table id="blueTable" class="blueTable table-bordered" border="1" bgcolor="white" >
+	<thead></thead>
+	<tbody>
+		<tr>
+			<th>Atendido por</th>
+			<th>especificaciones</th>
+			<!--
+			<th>borrar pedido</th>
+			-->	
+			<th>Agregar al pedido</th>
+			
+		</tr>
+		{%if pedidos%}		
+		{%for pedido in pedidos%}
+		{% if pedido.fkMesero != None and pedido.cobrado == False%}
+			<tr>
+			<td>
+				{{pedido.fkMesero}}
+			</td>
+			<td>
+				<table border="1">
+					<tbody>
+						<tr>
+							<th>Platillo</th>
+							<th>cantidad</th>
+							<th>Editar</th>
+							<th>Borrar</th>
+						</tr>
+						{%if lineas%}
+						{%for linea in lineas%}
+						{%if pedido.id == linea.fkPedido.id %}
+						<tr>
+							<td>
+								{{linea.fkProducto.nombreProd}}
+							</td>
+							<td>
+								{{linea.cantidad}}
+							</td>
+							
+								{% if linea.cancelado == False and pedido.cancelado == False%}
+									<td>
+										{% if pedido.enCocina == True %}
+											<a href="{% url 'caja:editarLinea' linea.id %}" >
+											<button class="boton">editar</button>
+											</a>
+										{% endif %}
+									</td>
+									<td>
+										<a href="{% url 'caja:eliminarLinea' linea.id %}" rel="get:id=10" rev="abcwin[500,auto]" style="color:white;">
+										<button class="boton">Eliminar</a></button>
+									</td>
+								{% else %}
+									<td>
+										<h5>Linea eliminada</h5>
+									</td>
+								{% endif %}
+							
+						</tr>
+						{%endif%}
+						{%endfor%}
+					</tbody>
+				</table>
+						{%endif%}
+			</td>
+			<!--
+			{%if pedido.cancelado == False%}
+				{% if pedido.enCocina == True %}
+					<td>
+						<a href="{% url 'caja:eliminarPedido' pedido.id %}" rel="get:id=10" rev="abcwin[500,auto]">
+						<button class="boton">Borrar pedido sin servir</button>
+						</a>
+					</td>
+				{% else %}
+					<td>
+						<a href="{% url 'caja:eliminarPedido2' pedido.id %}" rel="get:id=10" rev="abcwin[500,auto]">
+						<button class="boton">Borrar pedido servido</button>
+						</a>
+					</td>
+				{% endif %}
+			{% else %}
+					<td>
+						<h5>Pedido cancelado</h3>
+					</td>
+			{% endif %}
+			-->
+			<td>
+				{%if pedido.cancelado == False and pedido.enCocina == True%}
+					<a href="{% url 'caja:venta2' cuenta.id pedido.id %}" >
+						<button class="boton">Agregar</button>
+					</a>
+				{% else %}
+				{% endif %}
+			</td>
+		</tr>		 		
+		{% endif %}
+		{%endfor%}
+		{%endif%}
+	</tbody>
+</table>
+<endblock tabla>
+{%endblock contenido%}

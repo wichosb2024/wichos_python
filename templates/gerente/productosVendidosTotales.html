@@ -1,0 +1,45 @@
+{%extends "base/baseadmin.html"%}
+{%block contenido%}
+
+<link rel="stylesheet" type="text/css" href="/static/css/ABCwin.css"/>
+<script type="text/javascript" src="/static/js/ABCwin.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/estilo.css"/>
+
+ <div class="contenedor">
+            <div id="pestanas">
+                <ul id=lista>
+                    <li id="pestana1"><a href='javascript:cambiarPestanna(pestanas,pestana1);'>Ventas</a></li>
+                </ul>
+            </div>
+            <div id="contenidopestFanas">
+                <div id="cpestana1">
+
+                      <table id="tabla2" class="blueTable table-bordered" border="1" bgcolor="white">
+
+    	<thead>
+		    	<td>Nombre</td>
+			    <td>Ventas</td>
+	    </thead>
+	    <tbody>
+
+        {% for producto in productos %}
+        <tr>
+            <td>{{producto.nombreProd}}</td>
+            <td>
+
+
+
+            </td>
+
+
+        </tr>
+        {% endfor %}
+
+        </tbody>
+                      </table>
+                </div>
+            </div>
+ </div>
+
+
+{%endblock contenido%}

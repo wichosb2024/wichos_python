@@ -1,0 +1,7 @@
+#Python 3.5.0
+
+Django==2.2.4
+psycopg2
+#pytz==2019.2(Se instala con django)
+#sqlparse==0.3.0(Se instala con django)
+#virtualenv==16.7.2(opcional)

@@ -1,0 +1,151 @@
+#scroll {
+     width:628px;
+     height:315px;
+     overflow:auto;
+}
+#id_numero{
+    display: none;
+    unicode-range: U+30-39;
+    font-size: 30px;
+	text-align: center;
+	font-family: Arial, Helvetica, sans-serif;
+    }
+#banderin{
+	display: none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#Anuncio{
+	font-family: Arial, Helvetica, sans-serif;
+}
+#id_nombre{
+	display: none;
+	font-size: 30px;
+	text-align: center;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#noMesas{
+	display: none;
+}
+
+#conteo{
+	display: block;
+}
+#id_check{
+	display: none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#paraLlevar{
+	text-align: center;
+	display: none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#comerAqui{
+	display: none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#comerAqui2{
+	display: none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#delivery{
+	display: none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#paraLlevar2{
+	display: none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#id_valnombre{
+	display: none;
+	width: 200px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#id_valMesa{
+	display: none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#id_mesa{
+	display: none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#cambio{
+	display: none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#algoRaro{
+	display: none;
+	font-family: Arial, Helvetica, sans-serif;
+}	
+#agregar{
+	padding-top: 100px;
+	text-align: center;
+	 vertical-align: middle;
+}
+#submit{
+	display: none;
+}
+#id_check2{
+	display: none;
+}
+#inicializar{
+		position: absolute;
+		top:25%;
+		left:50%;
+		width:450px;
+		height:590px;
+		margin-left:-200px;
+		margin-top:-150px;
+		padding:5px;
+		border:1px solid #808080;
+		background:  #91a0a0  ;
+		border-radius: 20px;
+		justify-content: center
+
+}
+#body{
+	background:  black;
+}
+
+.button{
+width:222px;
+height:80px;
+}
+#id_direccion{
+    display: none;
+    font-size: 30px;
+	text-align: center;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#id_mesa{
+	text-align: center;
+	width: 150px;
+	height: 300px;
+	font-size: 40px;
+}
+
+.boton{
+    background-color: #2F69D6;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align:center;
+    text-decoration:none;
+    display: inline-block;
+    font-size: 20px;
+    border-radius: 12px;
+    margin-top: 10px;
+    margin-left: 0%;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.boton:hover{
+    background-color: blue;
+    color:white;
+}
+
+#id_meseros{
+	display: none;
+}

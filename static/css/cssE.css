@@ -1,0 +1,67 @@
+#pestanas {
+    float: top;
+    font-size: 14px;
+    font-weight: bold;
+    height: 30px;
+}
+
+#pestanas ul{
+    margin-left: -40px;
+    height: 30px;
+}
+
+#pestanas li{
+    list-style-type: none;
+    float: left;
+    font-size: 13px;
+    text-align: center;
+    margin: 0px 2px 0px -0px;
+    background: darkgrey;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 2px solid bisque;
+    border-bottom: dimgray;
+    padding: 0px 20px 0px 20px;
+    height: 30px;
+}
+
+#pestanas a:link{
+    text-decoration: none;
+    color: black;
+}
+
+#contenidopestanas{
+    clear: both;
+    background: dimgray;
+    border-radius: 5px;
+    border-top-left-radius: 0px;
+    border: 2px solid bisque;
+}
+
+#contenidopestanas div{
+  padding: 20px 0px 20px 20px;
+}
+
+#pestanas #pestana1, #cpestana1{
+  background: #7CF965;
+}
+
+#pestanas #pestana2, #cpestana2{
+  background: #F9AE65;
+}
+
+#pestanas #pestana3, #cpestana3{
+  background: #B4EEB4;
+}
+
+#pestanas #pestana4, #cpestana4{
+  background: #ADBBBB;
+}
+
+#pestanas #pestana5, #cpestana5{
+  background: #F96584;
+}
+
+#pestanas #pestana6, #cpestana6{
+  background: #407;
+}

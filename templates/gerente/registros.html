@@ -1,0 +1,307 @@
+{%extends "base/baseadmin.html"%}
+{%block contenido%}
+
+<link rel="stylesheet" type="text/css" href="/static/css/ABCwin.css"/>
+<script type="text/javascript" src="/static/js/ABCwin.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/estilo.css"/>
+	<script type="text/javascript" src="/static/js/imprimir.js"></script>
+<div class="contenedor">
+    <a href="{% url 'gerente:adde' %}" rel="get:id=10" rev="abcwin[800,auto]"><button class="boton">Registrar Transaccion</button></a>
+    <a href="{% url 'gerente:registrs' %}"><button onclick="printDiv('FACTURA')" class="boton">Imprimir Detalles</button> </a>
+            <div id="pestanas">
+                <ul id=lista>
+                    <li id="pestana1"><a href='javascript:cambiarPestanna(pestanas,pestana1);'>Transacciones</a></li>
+                </ul>
+            </div>
+
+            <div id="contenidopestFanas">
+                <div id="cpestana1">
+
+                      <table id="tabla2" class="blueTable table-bordered" border="1" bgcolor="white">
+
+    	<thead>
+		    	<td>Fecha</td>
+			    <td>Descripcion</td>
+			    <td>Tipo</td>
+                 <td>Monto</td>
+                <td>Accion</td>
+
+	    </thead>
+	    <tbody>
+
+        {% for transaccion in transacciones %}
+        <tr>
+            <td>{{transaccion.fecha}}</td>
+            <td>{{transaccion.descripcion}}</td>
+            <td>
+                {% if transaccion.tipo == True %}
+                EGRESO
+                {% else %}
+                INGRESO
+                {% endif %}
+            </td>
+            <td>{{transaccion.monto}}</td>
+            <td><a href="{% url 'gerente:eliminarTransaccion' transaccion.id %}"><button class="boton2">eliminar</button> </a></td>
+
+
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+                      </table>
+
+
+                    <HR>
+
+
+                    <table id="tabla2" class="blueTable table-bordered" border="1" bgcolor="white">
+
+    	<thead>
+		    	<td>TIPO</td>
+			    <td>Descripcion</td>
+			    <td>TOTAL</td>
+
+	    </thead>
+	    <tbody>
+
+
+        <tr>
+            <td>INGRESOS POR VENTAS</td>
+            <td>Total de ingresos generados por las ventas en el restaurante</td>
+            <td> $
+                <script>
+              var total=0;
+                 {% for cuenta in cuentas %}
+                      total=total+{{cuenta.total}};
+                  {% endfor %}
+
+     document.write(total.toFixed(2));
+
+    </script>
+            </td>
+
+        </tr>
+
+
+         <tr>
+            <td>EGRESOS REGISTRADOS</td>
+            <td>Total de los egresos registrados</td>
+            <td>
+
+                $
+                <script>
+              var total=0;
+                 {% for transaccion in transacciones %}
+
+                    {% if transaccion.tipo == True %}
+                      total=total+{{transaccion.monto}};
+                    {% endif %}
+                  {% endfor %}
+
+                document.write(total.toFixed(2));
+
+    </script>
+
+
+            </td>
+
+        </tr>
+
+
+         <tr>
+            <td>INGRESOS ADICIONALES REGISTRADOS</td>
+            <td>Total de los ingresos adicionales registrados</td>
+              <td>
+
+                $
+                <script>
+              var total=0;
+                 {% for transaccion in transacciones %}
+
+                    {% if transaccion.tipo == False %}
+                      total=total+{{transaccion.monto}};
+                    {% endif %}
+                  {% endfor %}
+
+                document.write(total.toFixed(2));
+
+    </script>
+            </td>
+        </tr>
+
+        </tbody>
+                      </table>
+                    <hr>
+                </div>
+            </div>
+
+
+    <table id="tabla2" class="blueTable table-bordered" border="1" bgcolor="white">
+
+    	<thead>
+		    	<td>TOTAL</td>
+                <td>TOTAL</td>
+
+
+	    </thead>
+	    <tbody>
+
+
+        <tr>
+            <td>Ingresos - Egresos = </td>
+            <td>
+$
+                <script>
+                     var totalV=0;
+                     var totalE=0;
+                     var totalI=0;
+                     var total=0;
+                 {% for cuenta in cuentas %}
+                      totalV=totalV+{{cuenta.total}};
+                  {% endfor %}
+
+                  {% for transaccion in transacciones %}
+
+                    {% if transaccion.tipo == True %}
+                      totalE=totalE+{{transaccion.monto}};
+                      {% else %}
+                      totalI=totalI+{{transaccion.monto}};
+                    {% endif %}
+                  {% endfor %}
+
+                    total=totalI+totalV-totalE;
+                    document.write(total.toFixed(2));
+
+                </script>
+
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+ </div>
+
+
+<div id ="FACTURA" align="center" class="FACTURA" style="display:none; font-size:40PX;">
+    <p>{{dia}}</p>
+       <p> Egresos e Ingresos registrados</p>
+     <table border="1" bgcolor="white">
+    	<thead>
+			    <td align="center">Descripcion</td>
+			    <td align="center">Tipo</td>
+                 <td align="center">Monto</td>
+	    </thead>
+	    <tbody>
+        {% for transaccion in transacciones %}
+        <tr>
+            <td align="center">{{transaccion.descripcion}}</td>
+            <td align="center">
+                {% if transaccion.tipo == True %}
+                EGRESO
+                {% else %}
+                INGRESO
+                {% endif %}
+            </td>
+            <td align="center">{{transaccion.monto}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+                      </table>
+   <p>TOTALES</p>
+
+    <table border="1">
+    	<thead>
+		    	<td>TIPO</td>
+			    <td>TOTAL</td>
+	    </thead>
+	    <tbody>
+        <tr>
+            <td>INGRESOS POR VENTAS</td>
+            <td> $
+                <script>
+              var total=0;
+                 {% for cuenta in cuentas %}
+                      total=total+{{cuenta.total}};
+                  {% endfor %}
+     document.write(total.toFixed(2));
+    </script>
+            </td>
+        </tr>
+         <tr>
+            <td>EGRESOS REGISTRADOS</td>
+            <td>
+                $
+                <script>
+              var total=0;
+                 {% for transaccion in transacciones %}
+                    {% if transaccion.tipo == True %}
+                      total=total+{{transaccion.monto}};
+                    {% endif %}
+                  {% endfor %}
+                document.write(total.toFixed(2));
+    </script>
+            </td>
+        </tr>
+         <tr>
+            <td>INGRESOS ADICIONALES</td>
+              <td>
+                $
+                <script>
+              var total=0;
+                 {% for transaccion in transacciones %}
+
+                    {% if transaccion.tipo == False %}
+                      total=total+{{transaccion.monto}};
+                    {% endif %}
+                  {% endfor %}
+                document.write(total.toFixed(2));
+    </script>
+            </td>
+        </tr>
+        </tbody>
+                      </table>
+<HR>
+    <table border="1" >
+    	<thead>
+		    	<td>TOTAL</td>
+                <td>TOTAL</td>
+	    </thead>
+	    <tbody>
+        <tr>
+            <td>Ingresos - Egresos = </td>
+            <td>$
+                <script>
+                     var totalV=0;
+                     var totalE=0;
+                     var totalI=0;
+                     var total=0;
+                 {% for cuenta in cuentas %}
+                      totalV=totalV+{{cuenta.total}};
+                  {% endfor %}
+
+                  {% for transaccion in transacciones %}
+
+                    {% if transaccion.tipo == True %}
+                      totalE=totalE+{{transaccion.monto}};
+                      {% else %}
+                      totalI=totalI+{{transaccion.monto}};
+                    {% endif %}
+                  {% endfor %}
+
+                    total=totalI+totalV-totalE;
+                    document.write(total.toFixed(2));
+                </script>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+</div>
+
+
+
+
+{%endblock contenido%}

@@ -1,0 +1,119 @@
+{% load static%}
+{% block css %}
+ 	<link rel="stylesheet" type="text/css" href="{% static "css/cssA.css" %}">
+ 	<script type="text/javascript" src="/static/js/scriptA.js"></script>
+ {% endblock css %}
+{%block contenido%}
+
+
+ <div class="contenedor2">
+            <div id="contenido2">
+				<table BORDER="10PX">
+					<tr>
+						<td>
+							<h1><label> Edición de pedido</label></h1>
+	<h3>
+		{{prod.nombreProd}}
+	</h3>
+							<div id="izquierda">
+ 		<form action="{% url 'caja:add' cuenta.id pedido.id prod.id%}" method='POST'>
+ 			{% csrf_token %}
+			<P></P>
+			CANTIDAD
+ 			{{form.cantidad}}
+			<P></P>
+			CEBOLLA
+			{{form.cebollaBase}}
+			<P></P>
+			<div id="FC" style="display:none">
+			CEBOLLA EXTRA
+			{{form.cebolla}}
+			<P></P>
+				</div>
+			<div id="FA" style="display:none">
+			AGUACATE EXTRA
+			{{form.aguacate}}
+				</div>
+			<hr>
+			<button type="submit" value="submit" class="boton3">Agregar línea</button>
+			<hr>
+ 		</form>
+	</div>
+						</td>
+						<TD>
+							<HR>
+							{% if prod.cebolla == True and prod.aguacate == True%}
+		 <div>
+		 <button class="boton3" id="mostrarExtra2" onclick="extrasMostrar2()">Agregar extras</button>
+		 </div>
+		  {% endif %}
+
+
+				 {% if prod.cebolla == True and prod.aguacate == False%}
+		 <div>
+		 <button class="boton3" id="mostrarExtraC" onclick="extrasMostrarC()">Agregar extras</button>
+		 </div>
+		  {% endif %}
+
+
+				 {% if prod.cebolla == False and prod.aguacate == True%}
+		 <div>
+		 <button class="boton3" id="mostrarExtraA" onclick="extrasMostrarA()">Agregar extras</button>
+		 </div>
+		  {% endif %}
+
+							<HR>
+							CANTIDAD
+							<HR>
+							<div>
+ 			<button id="boton1" class="boton3" onclick="incrementar()">+</button>
+			<button id="boton2" class="boton3" onclick="decrementar()">-</button>
+ 		</div>
+							<HR>
+							CEBOLLA
+							<HR>
+		<div>
+		 	{% if prod.cebolla == True %}
+				<button class="boton3" id="boton3" onclick="incrementar3()">+</button>
+				<button class="boton3" id="boton4" onclick="decrementar3()">-</button>
+			 {% endif %}
+ 		</div>
+						<HR>
+							<div id="TC" style="display:none">
+							CEBOLLA EXTRA($0.25)
+							<HR>
+							<TABLE>
+								<TD><button class="boton3" id="CExtraMas" onclick="incrementar1()">+</button></TD>
+								<TD><button class="boton3" id="CExtraMenos" onclick="decrementar1()">-</button></TD>
+							</TABLE>
+
+							</div>
+
+							<div id="TA" style="display:none">
+							<HR>
+							AGUACATE EXTRA($0.25)
+							<HR>
+							<TABLE>
+								<TD><button class="boton3" id="AExtraMas" onclick="incrementar2()">+</button></TD>
+								<TD><button class="boton3" id="AExtraMenos" onclick="decrementar2()">-</button></TD>
+							</TABLE>
+							</div>
+
+						</TD>
+					</tr>
+				</table>
+
+
+
+
+ <footer>
+ 			<a href="{% url 'caja:cancelarLinea' pedido.id %}"><button class="boton3">Cancelar</button></a>
+ 		</footer>
+
+			</div>
+ </div>
+
+
+
+	
+{%endblock contenido%}

@@ -1,0 +1,187 @@
+{%extends "base/baseadmin.html"%}
+{%block contenido%}
+
+<link rel="stylesheet" type="text/css" href="/static/css/estilo.css"/>
+<a href="{% url 'gerente:verventa'%}" "><button class="boton">Regresar</button> </a>
+ <div class="contenedor">
+            <div id="pestanas">
+			<div id="contenidopesftanas">
+
+				<h2>Detalle de la cuenta</h2>
+<hr>
+<p>Fecha: {{cuentas.fechaCuenta}}</p>
+<p>Iniciada por: {{cuentas.fkMesero}}</p>
+				<p>Total: {{cuentas.total}}</p>
+<hr>
+<h3>Detalles</h3>
+				<hr>
+{% if cuentas.cancelado == True %}
+<p>NOTA: ESTA CUENTA HA SIDO Cancelada</p>
+<p>Los motivos se encuentran adjuntos</p>
+{% elif cuentas.modificado == True%}
+<p>NOTA: ESTA CUENTA HA SIDO MODIFICADA</p>
+<p>Los motivos se encuentran adjuntos</p>
+{% endif %}
+
+<hr>
+<h3>Detalle de la cuenta</h3>
+   <table id="nose" class="blueTable table-bordered" class="display" border="1" bgcolor="white">
+		<thead>
+			<tr>
+				<td>Nombre</td>
+				<td>Cantidad</td>
+				<td>SubTotal</td>
+			</tr>
+		</thead>
+		<tbody>
+			{% for pedido in pedidos %}
+				{% if pedido.fkCuenta.id == cuentas.id and pedido.cancelado == False%}
+					{% for linea in lineas %}
+						{% if linea.fkPedido.id == pedido.id and linea.cancelado == False%}
+								<tr>
+									<td style='border: inset 0pt'>{{linea.fkProducto.nombreProd}}</td>
+									<td style='border: inset 0pt'>{{linea.cantidad}}</td>
+									<td style='border: inset 0pt'>{{linea.subtotal}}</td>
+								</tr>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+			{% endfor %}
+		</tbody>
+	</table>
+				{% if cuentas.cancelado == True %}
+					<table id="nose" class="blueTable table-bordered" class="display" border="1" bgcolor="white">
+						<thead>
+							<tr>
+								<td>Eliminado Por</td>
+								<td>Motivo</td>
+							</tr>
+
+							<tr>
+								<td>{{cuentas.fkMesero}}</td>
+								<td>{{cuentas.comentario}}</td>
+							</tr>
+						</thead>
+					</table>
+
+				{% endif %}
+				{% if cuentas.modificado %}
+					<br>
+					<h3>Pedidos eliminados</h3>
+					<table id="nose" class="blueTable table-bordered" class="display" border="1" bgcolor="white">
+						<thead>
+							<tr>
+								<td>Motivo de cancelacion</td>
+								<td>Subtotal</td>
+								<td>Detalle</td>
+							</tr>
+						</thead>
+						<tbody>
+						
+							{% for pedido in pedidos %}
+								{% if pedido.fkCuenta.id == cuentas.id and pedido.cancelado == True%}
+								<tr>
+									<td style='border: inset 0pt'>{{pedido.comentariomod}}</td>
+									<td style='border: inset 0pt'>{{pedido.subtotal}}</td>
+									<td>
+											<table id="nose" class="blueTable table-bordered" class="display" border="1" bgcolor="white">
+												<thead>
+													<tr>
+														<td>Nombre</td>
+														<td>Cantidad</td>
+														<td>SubTotal</td>
+													</tr>
+												</thead>
+												<tbody>
+									{% for linea in lineas %}
+										{% if linea.fkPedido.id == pedido.id %}										
+													<tr>
+														<td style='border: inset 0pt'>{{linea.fkProducto.nombreProd}}</td>
+														<td style='border: inset 0pt'>{{linea.cantidad}}</td>
+														<td style='border: inset 0pt'>{{linea.subtotal}}</td>
+													</tr>												
+										{% endif %}
+									{% endfor %}
+									</tbody>
+											</table>
+										</td>
+								{% endif %}
+							{% endfor %}
+						</tr>
+						</tbody>
+					</table>
+					<br>
+					{% if cuentas.modificado %}
+						<h3>Líneas eliminadas</h3>
+						<table id="nose" class="blueTable table-bordered" class="display" border="1" bgcolor="white">
+						<thead>
+							<tr>
+								<td>Nombre producto</td>
+								<td>cantidad</td>
+								<td>Subtotal</td>
+								<td>Comentario</td>
+							</tr>
+						</thead>
+						<tbody>
+							{% for pedido in pedidos %}
+								{% if pedido.fkCuenta.id == cuentas.id %}
+									{% for linea in lineas %}
+										{% if linea.fkPedido.id == pedido.id and linea.cancelado == True%}
+											<tr>
+												<td style='border: inset 0pt'>{{linea.fkProducto.nombreProd}}</td>
+												<td style='border: inset 0pt'>{{linea.cantidad}}</td>
+												<td style='border: inset 0pt'>{{linea.subtotal}}</td>
+												<td style='border: inset 0pt'>{{linea.comentarioMod}}</td>
+											</tr>
+										{% endif %}
+									{% endfor %}
+								{% endif %}
+							{% endfor %}
+						
+						</tbody>
+					</table>
+					<br>
+					{% endif %}
+					{% if cuentas.modificado %}
+						<h3>Líneas Modificadas</h3>
+						<table id="nose" class="blueTable table-bordered" class="display" border="1" bgcolor="white">
+						<thead>
+							<tr>
+								<td>Nombre producto</td>
+								<td>cantidad</td>
+								<td>Subtotal</td>
+								<td>Comentario</td>
+							</tr>
+						</thead>
+						<tbody>
+							{% for pedido in pedidos %}
+								{% if pedido.fkCuenta.id == cuentas.id %}
+									{% for linea in lineas %}
+										{% if linea.fkPedido.id == pedido.id and linea.modificado == True and cancelado == False%}
+											<tr>
+												<td style='border: inset 0pt'>{{linea.fkProducto.nombreProd}}</td>
+												<td style='border: inset 0pt'>{{linea.cantidad}}</td>
+												<td style='border: inset 0pt'>{{linea.subtotal}}</td>
+												<td style='border: inset 0pt'>{{linea.comentarioMod}}</td>
+											</tr>
+										{% endif %}
+									{% endfor %}
+								{% endif %}
+							{% endfor %}
+						
+						</tbody>
+					</table>
+					{% endif %}
+				{% endif %}
+
+
+</div>
+            </div>
+ </div>
+
+
+
+
+
+
+{%endblock contenido%}

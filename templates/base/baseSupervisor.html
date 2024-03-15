@@ -1,0 +1,47 @@
+{% extends 'base/basePlantilla.html' %}
+
+{% block nav %}
+
+<header id="header" class="header fixed-top">
+	<div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+		<a href="{% url 'gerente:indexger' %}" class="logo d-flex align-items-center">
+			<img src="assets/img/logo.png" alt="">
+			<br>
+			<span>Gerencia</span>
+		</a>
+			
+		<nav id="navbar" class="navbar">
+			<ul class="nav">
+			
+			
+				<li style="float:right"><a href="{%  url "gerente:generador"%}">Generar Cupones</a></li>
+				<li style="float:right"><a href="{%  url "gerente:verinve"%}">Ver Inventario</a>
+
+				<li class="dropdown"><a href="#"><span>Finanzas</span> <i class="bi bi-chevron-down"></i></a>
+          		<ul>
+				<li style="float:right"><a href="{%  url "gerente:graftdine"%}">Ingresos($)</a></li>
+				<li style="float:right"><a href="{%  url "gerente:verventa"%}">Ver Ventas</a></li>
+				<li style="float:right"><a href="{%  url "gerente:grafventa"%}">Grafica Ventas</a></li>
+				</ul>
+				</li>
+				<li style="float:right"><a href="{%  url "gerente:estadorestaur"%}">Estado </a></li>
+				
+				<li style="float:right" class="salir"><a href="{%  url "ingreso:logout"%}">Salir</a></li>
+				
+			</ul>
+			<i class="bi bi-list mobile-nav-toggle"></i>
+		</nav>
+		
+	</div>
+</header>
+{% endblock nav %}
+
+
+
+
+
+
+{% block contenido %}
+<h1>soy un supervisor</h5>
+{% endblock contenido %}

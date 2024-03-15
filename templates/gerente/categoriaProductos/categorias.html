@@ -1,0 +1,76 @@
+{%extends "base/baseadmin.html"%}
+{% block contenido %}
+<a href="{% url 'gerente:addCategoria' %}" >
+    <button class="boton">
+        Agregar
+    </button>
+</a>
+    <table id="tabla2" class="blueTable table-bordered" border="1" bgcolor="white">
+        <thead>
+            <tr>
+                <td >
+                    nombre
+                </td>
+                <td>
+                    Cantidad de productos
+                </td>
+                <td >
+                    Viene de
+                </td>
+                <td >
+                    Acciones
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            {% if array %}
+            {% for element in array %}
+                <tr>
+                    <td>
+                        {{element.categoria.nombreCate}}
+                    </td>                
+                    <td>
+                        {{element.productos}}
+                    </td>     
+                    <td>
+                        {% if element.categoria.comidaMexicana == False and element.categoria.cocinaNormal == False %}
+                        No pertenece a cocina
+                        {% elif element.categoria.comidaMexicana == True %}
+                        Cocina mexicana
+                        {% elif element.categoria.cocinaNormal == True%}
+                        Cocina tortas
+                        {% endif %}
+                    </td>  
+                    <td>
+                        <a href="{% url 'gerente:editarCategoria' element.categoria.id %}" >
+                            <button class="boton">
+                                Editar
+                            </button>
+                        </a>
+                        {% if element.productos == 0 %}
+                            <form id="eliminar" method="post" action="{% url 'gerente:eliminarCategoria' %}">
+                            {% csrf_token %}
+                            <input type="hidden" value='{{element.categoria.id}}' name="idCategoria">
+                            <button type="submit" class="boton" >Eliminar </button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            {% else %}
+            <h3>No se han registrado meseros</h3>
+            {% endif %}
+        </tbody>
+    </table>
+    <script type="text/javascript">
+       (function() {
+         var form = document.getElementById('eliminar');
+         form.addEventListener('submit', function(event) {
+           if (!confirm('Realmente desea eliminar?')) {
+             event.preventDefault();
+           }
+         }, false);
+       })();
+     </script>
+{% endblock contenido %}
+  

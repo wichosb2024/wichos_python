@@ -1,0 +1,24 @@
+{% extends 'caja/estadoRestaurante.html' %}
+
+{% block estadoTitle %}
+    <td>Acción</td>
+{% endblock estadoTitle %}
+{% block estadoTD %}
+{% if mesa.disponible == True %}
+    <td style="background-color:lightgreen;">                                    
+            <a href="{% url 'supervisor:cambiarEstadoMesa' mesa.id %}">
+                <button class="boton3">Cambiar estado</button>
+        </a>
+    </td>
+{% else %}
+    <td style="background-color:#FF9999;">
+            <a href="{% url 'supervisor:cambiarEstadoMesa' mesa.id %}">
+            <button class="boton3">Cambiar estado</button>
+            </a>
+    </td>
+{% endif %}
+{% endblock estadoTD %}
+{% block index %}
+<a href="{% url 'supervisor:indexSupervisor' %}" class="logo d-flex align-items-center">
+{% endblock index %}
+{% block estado %}{% endblock estado %}

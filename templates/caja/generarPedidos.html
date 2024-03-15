@@ -1,0 +1,111 @@
+{%block contenido%}
+{% load static%}
+<link rel="stylesheet" type="text/css" href="/static/css/ABCwin.css"/>
+<script type="text/javascript" src="/static/js/ABCwin.js"></script>
+<script type="text/javascript" src="/static/js/Pest.js"></script>
+<script type="text/javascript" src="/static/js/JQ.js"></script>
+<script type="text/javascript" src="/static/js/casoCebolla.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static "css/cssA.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static "css/cssD.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static "css/cssE.css" %}">
+<script type="text/javascript" src="/static/js/scriptA.js"></script>
+
+
+
+<div id="encabezado">
+		<a href="{%url 'caja:cancelar' cuenta.id pedido.id%}"><button class="boton">CANCELAR</button> </a>
+	{% if valor != 0%}
+<a href="{% url 'caja:terminarVenta' pedido.id%}" rel="get:id=10" rev="abcwin[500,auto]"><button class="boton">Terminar venta</button> </a>
+	{% endif %}
+</div>
+<hr>
+<div id="centraer">
+	<div class="Columna1">
+		 <div id="pestanas">
+            <ul id='lista'>
+				{% if productos %}
+					{% for producto in  productos%}
+							<li id="pestana{{producto.categoria.id}}">
+								<a href='javascript:cambiarPestanna(pestanas,pestana{{producto.categoria.id}});'>{{producto.categoria.nombreCate}}</a>
+							</li>
+					{% endfor %}
+				{% endif %}
+        </div>
+		<body onload="javascript:cambiarPestanna(pestanas,pestana{{primero.categoria.id}});">
+        <div id="contenidopestanas">
+			{% if productos %}
+				{% for producto in productos %}
+					{% if producto.productos %}
+						<div id="cpestana{{producto.categoria.id}}">
+							{% for prod in producto.productos %}
+								{% if prod.fkCategoriaProducto.id == producto.categoria.id %}
+                                    {% if prod.imagen.url != Null %}
+									<a href="{% url 'caja:add' cuenta.id pedido.id prod.id%}" rel="get:id=10" rev="abcwin[800,auto]">
+										<img src="{{ prod.imagen.url }}" width="120px" height="120px" border="5px" >
+									</a>
+                                    {%else%}
+                                        <a href="{% url 'caja:add' cuenta.id pedido.id prod.id%}" rel="get:id=10" rev="abcwin[800,auto]">
+										<button class="boton2">{{prod.nombreProd}}</button>
+									</a>
+                                    {% endif %}
+
+								{% endif %}
+							{% endfor %}
+						</div>
+					{% endif %}
+				{% endfor %}
+			{% else %}
+				<h1>No hemos registrado categorías</h1>
+			{% endif %}
+        </div>
+    </div>
+	<div class="Columna2" >
+		<h4><label style="font-family: Arial, Helvetica, sans-serif">Órdenes registradas</label> </h4>
+		<div id="scrollA" style="overflow-y: auto";>
+		<table id="table" class="tablepe" border="0" bgcolor="white" >
+			<thead >
+				<tr>
+					<td>
+						<div style="width:135px;">
+							Nombre
+						</td>
+					<td>
+						<div style="width:65px;">Cantidad</div>
+					</td>
+					<td>
+						<div style="width:50px;">
+							Cebolla
+						</div>
+					</td>
+					<td>
+						<div style="width:50px;">
+							Acción
+						</div>
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+				{% if lineas %}
+					{% for linea in lineas %}
+					<tr>
+						<td>{{linea.fkProducto.nombreProd}}</td>
+						<td>{{linea.cantidad}}</td>
+						{% if linea.cebollaBase > 0 %}
+							<td>{{linea.cebollaBase}}</td>
+						{% else %}
+							<td>0</td>
+						{% endif %}
+						<td>
+							<a href="{% url 'caja:borrarLinea' linea.fkPedido.id linea.id %}"><button class="boton4">X</button> </a>
+						</td>
+					</tr>
+					{% endfor %}
+				{% else %}
+					<h4 style="font-family: Arial, Helvetica, sans-serif;">Aún no hay órdenes</h4>
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
+</div>
+</div>
+{%endblock contenido%}

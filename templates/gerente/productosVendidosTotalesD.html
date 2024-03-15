@@ -1,0 +1,143 @@
+{%extends "base/baseadmin.html"%}
+{%block contenido%}
+	<script type="text/javascript" src="/static/js/imprimir.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/ABCwin.css"/>
+<script type="text/javascript" src="/static/js/ABCwin.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/estilo.css"/>
+
+ <div class="contenedor">
+         <a href="{% url 'gerente:proddiarios2' %}"><button onclick="printDiv('FACTURA')" class="boton">Imprimir Detalles</button> </a>
+            <div id="pestanas">
+                <a href="{% url 'gerente:proddinero' %}">
+      <button class="boton">
+        COMIDA MEXICANA
+        </button>
+    </a>
+                <ul id=lista>
+                    <li id="pestana1"><a href='javascript:cambiarPestanna(pestanas,pestana1);'>VENTAS</a></li>
+                </ul>
+            </div>
+            <div id="contenidopestFanas">
+                <div id="cpestana1">
+
+                      <table id="tabla2" class="blueTable table-bordered" border="1" bgcolor="white">
+
+    	<thead>
+		    	<td>Nombre</td>
+			    <td>Cantidad</td>
+                 <td>Total</td>
+	    </thead>
+	    <tbody>
+
+        {% for producto in productos %}
+        <tr>
+            <td>{{producto.nombreProd}}</td>
+
+            <td>
+                <script>
+                var total=0;
+                {% for OBJ in LPP %}
+
+                          {% for OBJ2 in OBJ.pedidos %}
+                                        {% for OBJ3 in OBJ2.lineas %}
+                                              {% if OBJ3.fkProducto.id == producto.id %}
+                                                     total=total+{{OBJ3.cantidad}};
+                                              {% endif %}
+                                        {% endfor %}
+                           {% endfor %}
+                {% endfor %}
+                 document.write(total);
+               </script>
+
+            </td>
+
+            <td>
+                <script>
+                var total=0;
+                {% for OBJ in LPP %}
+
+                          {% for OBJ2 in OBJ.pedidos %}
+                                        {% for OBJ3 in OBJ2.lineas %}
+                                              {% if OBJ3.fkProducto.id == producto.id %}
+                                                     total=total+{{OBJ3.subtotal}};
+                                              {% endif %}
+                                        {% endfor %}
+                           {% endfor %}
+                {% endfor %}
+                 document.write('$'+total.toFixed(2));
+               </script>
+
+            </td>
+
+
+        </tr>
+        {% endfor %}
+
+        </tbody>
+                      </table>
+                </div>
+            </div>
+ </div>
+
+<div id ="FACTURA" align="center" class="FACTURA" style="display:none; font-size:40PX;">
+
+    <table border="1">
+
+    	<thead>
+		    	<td>Nombre</td>
+			    <td>Cantidad</td>
+                 <td>Total</td>
+	    </thead>
+	    <tbody>
+
+        {% for producto in productos %}
+        <tr>
+            <td>{{producto.nombreProd}}</td>
+
+            <td>
+                <script>
+                var total=0;
+                {% for OBJ in LPP %}
+
+                          {% for OBJ2 in OBJ.pedidos %}
+                                        {% for OBJ3 in OBJ2.lineas %}
+                                              {% if OBJ3.fkProducto.id == producto.id %}
+                                                     total=total+{{OBJ3.cantidad}};
+                                              {% endif %}
+                                        {% endfor %}
+                           {% endfor %}
+                {% endfor %}
+                 document.write(total);
+               </script>
+
+            </td>
+
+            <td>
+                <script>
+                var total=0;
+                {% for OBJ in LPP %}
+
+                          {% for OBJ2 in OBJ.pedidos %}
+                                        {% for OBJ3 in OBJ2.lineas %}
+                                              {% if OBJ3.fkProducto.id == producto.id %}
+                                                     total=total+{{OBJ3.subtotal}};
+                                              {% endif %}
+                                        {% endfor %}
+                           {% endfor %}
+                {% endfor %}
+                 document.write('$'+total.toFixed(2));
+               </script>
+
+            </td>
+
+
+        </tr>
+        {% endfor %}
+
+        </tbody>
+                      </table>
+
+</div>
+
+
+{%endblock contenido%}

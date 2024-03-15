@@ -1,0 +1,57 @@
+{%extends "base/base.html"%}
+{%block contenido%}
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="/static/css/estilo.css"/>
+      <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/static/js/cambiarPestanna.js"></script>
+		<link rel="stylesheet" type="text/css" href="/static/css/ABCwin.css"/>
+		<script type="text/javascript" src="/static/js/ABCwin.js"></script>
+
+        <title></title>
+    </head>
+    <body onload="javascript:cambiarPestanna(pestanas,pestana1);">    	
+	{%block registro%}
+	{%endblock registro%}
+      <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+        <div class="contenedor">
+            <div class="titulo">ESTADO DEL RESTAURANTE</div>
+            <div id="pestanas">
+                <ul id=lista>
+                    <li id="pestana1"><a href='javascript:cambiarPestanna(pestanas,pestana1);'>Mesas</a></li>
+                </ul>
+            </div>
+            <div id="contenidopestanas">
+                <div id="cpestana1">
+                    <table id="tabla1" class="tablepe table-bordered" border="1" bgcolor="white">
+                        <thead>
+                            <tr>
+                                <td>Mesa</td>
+                                <td>Estado</td>
+                                {% block estadoTitle %}
+                                {% endblock estadoTitle %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for mesa in mesas %}
+                            <tr>
+                                <td>{{mesa.id}}</td>
+                                {% if mesa.disponible == True %}
+                                    <td style="background-color:lightgreen;">Disponible</td>
+                                {% else %}
+                                    <td style="background-color:#FF9999;">Ocupada</td>
+                                {% endif %}
+                                {% block estadoTD %}
+                                {% endblock estadoTD %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+{%endblock contenido%}

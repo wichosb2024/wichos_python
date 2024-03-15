@@ -1,0 +1,21 @@
+
+{%block contenido%}
+ <div class="contenedor2">
+            <div id="contenido2">
+                 <div id="principal">
+ 	<div id="izquierda">
+
+<form method="POST" action="{% url 'gerente:gestinsu' idInsumo %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="boton3" type="submit">Guardar</button>
+</form>
+
+
+    </div>
+                 </div>
+
+            </div>
+ </div>
+
+{%endblock contenido%}

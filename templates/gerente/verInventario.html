@@ -1,0 +1,40 @@
+{%extends "base/baseadmin.html"%}
+{%block contenido%}
+
+<link rel="stylesheet" type="text/css" href="/static/css/ABCwin.css"/>
+<script type="text/javascript" src="/static/js/ABCwin.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/estilo.css"/>
+
+ <div class="contenedor">
+            <div id="pestanas">
+                <ul id=lista>
+                    <li id="pestana1"><a href='javascript:cambiarPestanna(pestanas,pestana1);'>Inventario</a></li>
+                </ul>
+            </div>
+            <div id="contenidopestFanas">
+                <div id="cpestana1">
+
+                      <table id="tabla2" class="blueTable table-bordered" border="1" bgcolor="white">
+                          <a href="{% url 'gerente:addinsu' %}" rel="get:id=10" rev="abcwin[800,auto]"><button class="boton">Agregar</button></a>
+    	<thead>
+		    	<td>Nombre</td>
+			    <td>Cantidad por paquete</td>
+			    <td>Existencias</td>
+			    <td>Proveedor</td>
+	    </thead>
+	    <tbody>
+        {% for existencia in existencias %}
+        <tr>
+            <td><h4>{{existencia.fkInsumo.nombreIns}}</h4></td>
+            <td>{{existencia.fkInsumo.cantPaquete}}</td>
+            <td >{{existencia.cantidad}}</td>
+            <td>{{existencia.fkInsumo.proveedor}}</td>
+            <td><a href="{% url 'gerente:gestinsu' existencia.fkInsumo.id %}" rel="get:id=10" rev="abcwin[500,auto]">Agregar existencias</a></td>
+            {% endfor %}
+        </tr>
+        </tbody>
+                </div>
+            </div>
+ </div>
+
+{%endblock contenido%}

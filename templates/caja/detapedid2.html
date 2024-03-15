@@ -1,0 +1,40 @@
+{%block registro%}
+{%endblock registro%}
+{%block contenido%}
+
+<table id="blueTable" class="blueTable table-bordered" border="1" bgcolor="white">
+	<thead>
+		<tr>
+			<td>Nombre</td>
+			<td>Cantidad</td>
+			<td>Cebolla</td>
+			<td>Sub-Total</td>
+
+		</tr>
+	</thead>
+	<tbody>
+
+		<tr>
+	{% for linea in lineas %}
+		{% if linea.fkPedido.id == pedidos.id %}
+			<tr>
+			<td style='border: inset 0pt'>{{linea.fkProducto.nombreProd}}</td>
+			<td style='border: inset 0pt'>{{linea.cantidad}}</td>
+
+							{% if linea.cebollaBase > 0 %}
+							<td>{{linea.cebollaBase}}</td>
+							{% else %}
+							<td>0</td>
+							{% endif %}
+
+
+			<td style='border: inset 0pt'>{{linea.subtotal}}</td>
+			</tr>
+		{% endif %}
+	{% endfor %}
+
+	</tbody>
+</table>
+
+{%endblock contenido%}
+

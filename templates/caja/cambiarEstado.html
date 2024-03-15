@@ -1,0 +1,21 @@
+{% load static %}
+{%block contenido%}
+<link rel="stylesheet" type="text/css" href="{% static "css/cssB.css" %}">
+<div>
+	<h2>
+		<label>
+		El estado actual es:
+		{%if pedido.enCocina == True%}
+		En cola de cocina
+		{%else%}
+		Ha sido servido
+		{%endif%}
+		</label>
+	</h2>
+	{% if request.user.is_authenticated %}
+		<a href="{% url 'caja:indexcajero' %}"><button class="boton">Aceptar</button> </a>
+	{% else %}
+		<a href="{% url 'caja:indexmes' %}"><button class="boton">Aceptar</button> </a>
+	{% endif %}
+</div>
+{%endblock contenido%}

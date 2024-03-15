@@ -1,0 +1,14 @@
+{% load static%}
+{% block css %}
+ 	<link rel="stylesheet" type="text/css" href="{% static "css/cssA.css" %}">
+ 	<script type="text/javascript" src="/static/js/scriptA.js"></script>
+ {% endblock css %}
+ <div class="contenedor2">
+            <div id="contenido2">
+		<form action="{% url 'caja:reasignarMesa' idCuenta %}" method="POST" id="form">
+		{%csrf_token%}
+		{{form.as_p}}
+		<button type="submit" value="submit" id="submit" class="boton">Reasignar mesa</button>
+	</form>
+</div>
+ </div>

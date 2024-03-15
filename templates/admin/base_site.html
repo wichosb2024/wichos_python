@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+{%load static i18n %}
+{%block title %}
+{{site_tittle|default:_(' Wichos Burguer')}}
+{%endblock title %}
+{% block branding %}
+	<h1 id="site name">
+		<a href="{% url 'admin:index' %}">
+			<img src="">Sitio Administrativo de usuarios
+			<br><br>
+		</a>
+	</h1>
+{% endblock branding %}
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="">
+{% endblock extrahead %}
+{%block userlinks  %}
+ <a href="{% url 'admin:password_change' %}">Cambiar contraseña</a>
+ <a href="{% url 'ingreso:logout' %}">Salir</a>
+{%endblock userlinks  %}

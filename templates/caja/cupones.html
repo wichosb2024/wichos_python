@@ -1,0 +1,9 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static "css/cssA.css" %}">
+<div>
+	<form action="{% url 'caja:descuento' cuenta%}" method='POST'>
+		{% csrf_token %}
+		{{form.as_p}}
+		<button type="submit" value="submit" class="boton">Aplicar cupon</button>
+	</form>
+</div>

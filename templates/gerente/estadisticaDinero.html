@@ -1,0 +1,142 @@
+{%extends "base/baseadmin.html"%}
+{%block contenido%}
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Estadisticas</title>
+
+</head>
+<body>
+<script src="/static/js/highcharts.js"></script>
+<script src="/static/js/data.js"></script>
+<script src="/static/js/export-data.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/ABCwin.css"/>
+<script type="text/javascript" src="/static/js/ABCwin.js"></script>
+
+<div id="container">
+
+<script>
+  var ene=0;
+  var feb=0;
+  var mar=0;
+  var abr=0;
+  var may=0;
+  var jun=0;
+  var jul=0;
+  var ago=0;
+  var sep=0;
+  var oct=0;
+  var nov=0;
+  var dic=0;
+{% for cuenta in cuentas %}
+
+{% if cuenta.fechaCuenta.month == 1 and cuenta.fechaCuenta.year == dia.year %}
+    ene=ene+{{cuenta.total}};
+{% endif %}
+{% if cuenta.fechaCuenta.month == 2 and cuenta.fechaCuenta.year == dia.year %}
+    feb=feb+{{cuenta.total}};
+{% endif %}
+{% if cuenta.fechaCuenta.month == 3 and cuenta.fechaCuenta.year == dia.year %}
+    mar=mar+{{cuenta.total}};
+{% endif %}
+{% if cuenta.fechaCuenta.month == 4 and cuenta.fechaCuenta.year == dia.year %}
+    abr=abr+{{cuenta.total}};
+{% endif %}
+{% if cuenta.fechaCuenta.month == 5 and cuenta.fechaCuenta.year == dia.year %}
+    may=may+{{cuenta.total}};
+{% endif %}
+{% if cuenta.fechaCuenta.month == 6 and cuenta.fechaCuenta.year == dia.year %}
+    jun=jun+{{cuenta.total}};
+{% endif %}
+{% if cuenta.fechaCuenta.month == 7 and cuenta.fechaCuenta.year == dia.year %}
+    jul=jul+{{cuenta.total}};
+{% endif %}
+{% if cuenta.fechaCuenta.month == 8 and cuenta.fechaCuenta.year == dia.year %}
+    ago=ago+{{cuenta.total}};
+{% endif %}
+{% if cuenta.fechaCuenta.month == 9 and cuenta.fechaCuenta.year == dia.year %}
+    sep=sep+{{cuenta.total}};
+{% endif %}
+{% if cuenta.fechaCuenta.month == 10 and cuenta.fechaCuenta.year == dia.year %}
+    oct=oct+{{cuenta.total}};
+{% endif %}
+{% if cuenta.fechaCuenta.month == 11 and cuenta.fechaCuenta.year == dia.year %}
+    nov=nov+{{cuenta.total}};
+{% endif %}
+{% if cuenta.fechaCuenta.month == 12 and cuenta.fechaCuenta.year == dia.year %}
+    dic=dic+{{cuenta.total}};
+{% endif %}
+
+{% endfor %}
+
+
+
+
+
+
+
+  Highcharts.chart('container', {
+    chart: {
+        type: 'line'
+    },
+    title: {
+        text: 'Ingresos del restaurante en Dolares ($)'
+    },
+    subtitle: {
+        text: 'Anual dividido en meses'
+    },
+    xAxis: {
+        categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+    },
+    yAxis: {
+        title: {
+            text: 'Dinero ($)'
+        }
+    },
+    plotOptions: {
+        line: {
+            dataLabels: {
+                enabled: true
+            },
+            enableMouseTracking: false
+        }
+    },
+    series: [{
+        name: 'Ingresos',
+        data: [ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic]
+    },
+    ]
+});
+</script>
+</div>
+
+<hr>
+<div id="Transacciones" align="center">
+
+    EL TOTAL DE INGRESOS DE ESTE DIA ACTUALMENTE ES DE:      $
+
+ <script>
+    var total=0;
+    {% for cuenta in cuentas %}
+
+    {% if cuenta.fechaCuenta.day == dia.day and cuenta.fechaCuenta.month == dia.month and cuenta.fechaCuenta.year == dia.year %}
+   total=total+{{cuenta.total}};
+    {% endif %}
+      {% endfor %}
+
+     document.write('$'+total.toFixed(2));
+
+    </script>
+<hr>
+
+
+
+
+
+
+</div>
+
+</body>
+</html>
+
+{%endblock contenido%}

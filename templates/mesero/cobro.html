@@ -1,0 +1,35 @@
+{%extends "caja/verDetalleVenta.html"%}
+	{%block cobro%}
+		
+		{% if cuentas.impreso and cuentas.final and control == True%}
+			<a href="{% url 'caja:archivar' cuentas.id %}"><button  class="boton">Archivar venta</button> </a>
+		{% endif %}
+		
+	{%endblock cobro%}
+
+	{% block index %}
+		<a href="{% url 'caja:indexmes' %}" class="logo d-flex align-items-center">
+	{% endblock index%}
+
+	{%block inicio%}
+		<li style="float:right" class="inicio"><a href="{%  url "caja:indexmes"%}">Inicio</a></li>
+	{%endblock inicio%}
+
+	{%block registro%}
+	{%endblock registro%}
+
+	{%block estado%}
+		<li style="float:right"><a href="{%  url "caja:iniciarVenta"%}">Registrar venta</a></li>
+	{%endblock estado%}
+
+	{%block yanosequeponerdenombre%}
+	
+	{% if cuenta.final == False %}
+		<a href="{% url 'caja:eliminarCuenta' cuentas.id%}" rel="get:id=10" rev="abcwin[500,auto]" ><button class="boton">Borrar cuenta</button> </a>
+	{% endif %}	
+	{% if cuentas.fkMesa != null %}
+		<a href="{% url 'caja:reasignarMesa' cuentas.id%}" rel="get:id=10" rev="abcwin[500,auto]" ><button class="boton">Reasignar mesa</button> </a>
+	{% endif %}
+	{%block cupon%}
+	{% endblock cupon %}
+{%endblock yanosequeponerdenombre%}

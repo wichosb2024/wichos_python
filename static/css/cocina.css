@@ -1,0 +1,34 @@
+body {
+    background: #D8DBD8;
+}
+
+.contenedor{
+    font-family: Arial, Helvetica, sans-serif;
+    background: powderblue;
+    color: Black;
+    border-radius: 10px;
+    font-weight: bold;
+    box-shadow: 0px 10px 10px 0px rgba(0.8, 0.8, 0.8, 0.8);
+}
+
+.contenedor .titulo{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 3.5ex;
+    font-weight: bold;
+}
+
+.contenedor2{
+    font-family: Arial, Helvetica, sans-serif;
+    background: lightgreen;
+    color: Black;
+    font-weight: bold;
+    border-radius: 10px;
+    box-shadow: 0px 10px 10px 0px rgba(0.8, 0.8, 0.8, 0.8);
+}
+
+.contenedor2 .titulo{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 3.5ex;
+    font-weight: bold;
+}
+

@@ -1,0 +1,114 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/divDetalle.css" %}">
+	<script type="text/javascript" src="{% static "js/detalle.js"%}"></script>
+	<script type="text/javascript" src="{% static "js/ABCwin.js"%}"></script>
+	<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/js/buscador.js"></script>
+{% endblock css %}
+
+{%block refresh%}
+	<script>
+		setTimeout('document.location.reload()',28000);
+	</script>
+{%endblock refresh%}
+{%block contenido%} 
+
+ <div class="contenedor" style="scroll:auto;">
+	<div id="pestanas">
+		<ul id=lista>
+			<li id="pestana1">Pedidos</li>
+		</ul>
+	</div>
+	<div id="contenidopstanas">
+		<div id="cpestana1">
+			<block tabla>
+
+				<div class="form-group">
+					 <input type="text" class="form-control pull-right" style="width:50%" id="search" placeholder="Escriba la cuenta...">
+				</div>
+
+				<table class="blueTable"  border="1" id="cuentas">
+					<thead >
+							<td style="width:40%">Cliente/Prioridad</td>		
+							{%block numero1%}
+							<td style="width:30%">Acción</td>
+							<td style="width:30%">Detalle del pedido</td>
+							{%endblock numero1%}
+							{%block numero2%}
+										
+							{%endblock numero2%}
+					</thead>
+					<tbody >
+						{% block diferencia %}
+							{% if cuentas %}
+								{% for cuenta in cuentas %}
+										<tr >
+											<table class="blueTable"  border="1" id="cuentas">
+												<tr>
+													{% if cuenta.cuenta.fkMesa != null %}
+														<td style="background-color:lightgreen;width:40%" ><h3>Mesa: {{ cuenta.cuenta.fkMesa.id }}</h3></td>
+													{% elif cuenta.cuenta.delivery == True %}
+														<td style="background-color:#D50FD2;width:40%"><h3>{{ cuenta.cuenta.cliente }}</h3></td>
+													{% else %}
+														<td style="background-color:orange;width:40%"><h3> {{ cuenta.cuenta.cliente }}</h3></td>
+													{% endif %}	
+													<td style="width:30%">
+														<a href="{% url 'caja:detallevent' cuenta.cuenta.id %}" ><button class="boton2" >efectuar cobro</button></a>
+													</td>
+													<td style="width:30%">
+														<button class="boton2" onclick="cambiar({{cuenta.cuenta.id}})">Mostrar pedidos</button>
+													</td>
+												</tr>	
+											</table>
+										</tr>
+										<tr>
+											<div id="{{cuenta.cuenta.id}}" class="divDetalle">
+												<table class="blueTable" id="cuentas" >
+													<tbody>
+														{% for ped in cuenta.pedido %}
+															<tr>
+																{% if ped.prioridad != 0 %}
+																	<td style="background-color:#EEA990; width:40%">Alta<div style="display:none">{{ ped.fkCuenta.fkMesa.id }} {{ ped.fkCuenta.cliente}} </div></td>
+																{% else %}
+																	<td style="border: inset 0pt;width:40%">Baja<div style="display:none">{{ ped.fkCuenta.fkMesa.id }} {{ ped.fkCuenta.cliente}} </div></td>
+																{% endif %}
+																<td>
+																	<table>
+																		<td><div style="display:none">{{ ped.fkCuenta.fkMesa.id }} {{ ped.fkCuenta.cliente}} </div>
+																			{% if ped.paraLlevar == True %}
+																				<img src="/static/img/Auto.png" width="30px" height="30px">
+																			{% else %}
+																				<img src="/static/img/Mesa.png" width="30px" height="30px">
+																			{% endif %}
+																		</td>
+																		{% if ped.enCocina == True %}
+																			<td><div style="display:none">{{ ped.fkCuenta.fkMesa.id }} {{ ped.fkCuenta.cliente}} </div>
+																				<a href="{% url 'caja:lin' ped.id %}" rel="get:id=10" rev="abcwin[500,auto]">En Espera/Cocina</a>
+																			</td>
+																		{% else %}
+																			<td>
+																				<a href="{% url 'caja:lin' ped.id %}" rel="get:id=10" rev="abcwin[500,auto]">Servido</a>
+																			</td>
+																		{% endif %} 
+																	</table>
+																</td>
+															</tr>
+														{% endfor %}
+													</tbody>
+												</table>
+											</div>
+										</tr>
+								{% endfor %}
+							{% endif %}
+						{% endblock diferencia %}
+					</tbody>
+				</table>
+			<endblock tabla>
+		</div>
+	</div>
+ </div>
+
+
+{%endblock contenido%}

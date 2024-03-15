@@ -1,0 +1,18 @@
+1-Agregar un buscador en las pantallas donde están las cuentas(mesero) y en la pantalla donde están el listado de las cuentas por cobrar(caja)
+2-Hacer mas grande la lista para elegir las mesas en la creación de la cuenta.
+3-En la pantalla donde se agregan los productos, la tabla del detalle de los productos agregados anclarla al lado derecho.
+4-Habilitar que se puedan escribir cantidades por medio de teclado en la adición de un producto.
+5-En la pantalla de confirmación del pedido, hacer mas grande el listado de los nombres de los meseros.
+(Andrés
+6-Crear un menú de navegabilidad vertical para acceder a las funciones de mesero/cajero sin salirse.
+7-listo-Mover el botón de imprimir factura al detalle de la cuenta antes de cobrar(se imprime desde cajero)
+)
+8-Definir un tamaño fijo a los contenedores de los pedidos en la pantalla de cocina
+9-Validar que solo se pueden cobrar cuentas cuando no hay ningún pedido en cocina, posteriormente una vez cobrada la cuenta se debe de archivar.
+(Andrés
+10-listo-Quitar la restricción que en cajero se muestre el listado de las cuentas ya impresas, se mostrarán todas y se podrá cobrar sin imprimir.
+11-listo-a medias-Quitar la validación del pin de 4 digitos para cobrar una cuenta, se sustituirá por un login global para que un cajero pueda acceder a cobrar todas las cuentas sin validación y también tenga todas las capacidades de un mesero
+12-listo-Quitar los botones para cambiar el estado de las mesas.
+)
+13-Agregar imágenes de los productos(En la medida de no saturar la pantalla)
+14-Proporcionar la capacidad de agregar o remover cajeros y meseros desde gerente.

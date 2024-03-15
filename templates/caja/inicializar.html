@@ -1,0 +1,46 @@
+{% load static%}
+{% block css %}
+ 	<link rel="stylesheet" type="text/css" href="{% static "css/cssB.css" %}">
+ 	<script type="text/javascript" src="/static/js/inicializar.js"></script>
+ {% endblock css %}
+
+ <body id="body">	
+<div id="inicializar">
+
+<h1><label id="anuncio">Indique el tipo de venta</label> </h1>
+<h1><label id="comerAqui">Para comer aquí</label> </h1>
+<h1><label id="paraLlevar">Para llevar</label> </h1>
+<h1><label id="delivery">Delivery</label> </h1>
+<h1><label id="noMesas"> Lo sentimos, no hay mesas disponibles</label> </h1>
+
+<input type="number" name="banderin" id="banderin" value="0">
+<input type="number" name="conteo" id="conteo" value={{valor}}>
+<a href="/caja/iniciarVenta/">
+<button  id="cambio" class="boton">Reiniciar</button>
+</a>
+<button  id="llevar" text-align="center" class="boton">Para llevar</button>
+	<label id="paraLlevar2">Nombre del Cliente: </label>
+<button  id="aqui" class="boton">Para comer aqui</button>
+	<label id="comerAqui2">Numero de Mesa: </label>
+<button  id="deli" class="boton">Delivery</button>
+	<label id="deli2">Nombre del cliente</label>
+
+<div id="formulario">
+
+	<form action="/caja/iniciarVenta/" method="POST" id="form">
+		<div id="formu">
+
+	{% csrf_token %}
+	{{form.as_p}}
+		</div>
+	<button type="submit" value="submit" id="submit" class="boton">Generar pedido</button>
+</form>
+</div>
+<div>
+	<a href="javascript: history.go(-1)"><button class="boton">Volver</button> </a>
+</div>
+
+
+</div>
+ 
+ </body>

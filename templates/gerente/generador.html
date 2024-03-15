@@ -1,0 +1,113 @@
+{%extends "base/baseadmin.html"%}
+{% load static%}
+ 	<link rel="stylesheet" type="text/css" href="{% static "css/cssC.css" %}">
+ 	<link rel="script" type="text/javascript" src="{% static "/js/scriptC.js" %}">
+
+{%block contenido%}
+	<script type="text/javascript" src="/static/js/imprimir.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/estilo.css"/>
+
+ <div class="contenedor" align="center">
+    <div id="pestanas">
+	
+		<table class="tablep">
+		<tr>
+			<td>
+				<h4 style="align:right">
+					<label>
+						<a href="{% url 'gerente:eliminato2' %}"><button style="margin: 20px">Eliminar todos los tickets</button></a>
+						{%if cupones%}
+							<a href="{% url 'gerente:generador' %}">
+								<button onclick="printDiv('FACTURA')" class="boton">Imprimir Tickets</button> 
+							</a>
+						{% endif %}
+					</label>
+				</h4>
+			</td>
+		</tr>
+			<tr>
+			</tr>
+			<tr>
+				<td>
+					<form action="{% url 'gerente:generador' %}" method="POST" id="form">
+						{% csrf_token %}
+						{{form.as_p}}
+						<button type="gerente" value="submit" id="submit" class="boton" style="align:center">Generar tickets</button>
+					</form>
+				</td>
+				
+			</tr>
+		</table>
+	<h2>
+		
+	</h2>
+	<table border="1" >
+		<thead>
+			<tr>
+				<td>Código</td>
+				<td>Porcentaje</td>
+				<td>Acción</td>
+			</tr>
+		</thead>
+		<tbody>
+			{%if cupones%}
+			{%for cupon in cupones%}
+			<tr>
+				<td>
+					{{cupon.codigo}}
+				</td>
+				<td>
+					{{cupon.porcentaje}}
+				</td>
+				<td>
+					<a href="{% url 'gerente:elimina1' cupon.codigo %}">Eliminar</a>
+				</td>
+			</tr>
+			{%endfor%}
+			{%endif%}
+		</tbody>
+	</table>
+
+
+		<div id ="FACTURA" align="center" class="FACTURA" style="display:none; font-size:70PX;">
+	<table border="1" >
+		<thead>
+			<tr>
+				<td>Código</td>
+				<td>Porcentaje</td>
+			</tr>
+		</thead>
+		<tbody>
+			{%if cupones%}
+			{%for cupon in cupones%}
+			<tr>
+				<td>
+					{{cupon.codigo}}
+				</td>
+				<td>
+					{{cupon.porcentaje}}
+				</td>
+			</tr>
+			{%endfor%}
+			{%endif%}
+		</tbody>
+	</table>
+</DIV>
+	</div>
+ </div>
+
+
+
+
+
+
+
+
+
+
+
+
+{%endblock contenido%}
+
+
+

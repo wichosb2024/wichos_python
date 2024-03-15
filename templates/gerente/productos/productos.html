@@ -1,0 +1,51 @@
+{%extends "base/baseadmin.html"%}
+{%block contenido%}
+
+<link rel="stylesheet" type="text/css" href="/static/css/ABCwin.css"/>
+<script type="text/javascript" src="/static/js/ABCwin.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/estilo.css"/>
+
+ <div class="contenedor">
+            <div id="pestanas">
+                <ul id=lista>
+                    <li id="pestana1"><a href='javascript:cambiarPestanna(pestanas,pestana1);'>Productos</a></li>
+                </ul>
+            </div>
+            <div id="contenidopestFanas">
+                <div id="cpestana1">
+
+                      <table id="tabla2" class="blueTable table-bordered" border="1" bgcolor="white">
+                          <a href="{% url 'gerente:agregarProduct' %}" rel="get:id=10" rev="abcwin[800,auto]"><button class="boton">Agregar</button></a>
+    	<thead>
+		    	<td>Nombre</td>
+			    <td>Categoria</td>
+			    <td>Precio</td>
+			    <td>Abreviatura</td>
+                <td>Abreviatura</td>
+                 <td>Acciones</td>
+	    </thead>
+	    <tbody>
+        {% for producto in productos %}
+        <tr>
+            <td>{{producto.nombreProd}}</td>
+            <td>{{producto.fkCategoriaProducto.nombreCate}}</td>
+            <td >{{producto.precio}}</td>
+            <td>{{producto.abreviatura}}</td>
+            <td>
+
+                {% if producto.imagen.url != Null %}
+										<img src="{{ producto.imagen.url }}" width="70px" height="70px" border="5px" >
+                                    {%else%}
+                                       {{producto.nombreProd}}
+                                    {% endif %}
+
+            </td>
+            <td><a href="{% url 'gerente:gestprd' producto.id %}" rel="get:id=10" rev="abcwin[800,auto]"><button class="boton">Editar</button></a>-<a href="{% url 'gerente:eliminarPrd' producto.id %}" ><button class="boton">Eliminar</button></a></td>
+            {% endfor %}
+        </tr>
+        </tbody>
+                </div>
+            </div>
+ </div>
+
+{%endblock contenido%}

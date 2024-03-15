@@ -1,0 +1,77 @@
+{%extends "base/baseadmin.html"%}
+{%block contenido%}
+
+<link rel="stylesheet" type="text/css" href="/static/css/ABCwin.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/estilo.css"/>
+<link href="/static/css/jquery.dataTables.min.css" rel="stylesheet"/>
+<script type="text/javascript" src="/static/js/ABCwin.js"></script>
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.dataTables.min.js"></script>
+
+
+
+<script>$(document).ready(function() {
+    $('#nose').DataTable();
+} );</script>
+
+ <div class="contenedor">
+            <div id="pestanas">
+                <ul id=lista>
+                    <li id="pestana1"><a href='javascript:cambiarPestanna(pestanas,pestana1);'>Ventas Realizadas</a></li>
+                </ul>
+            </div>
+            <div id="contenidoFpestanas">
+                <div id="cpestana1">
+
+                      <table id="nose" class="blueTable table-bordered" border="1" bgcolor="black">
+
+                          <thead>
+                          <tr>
+		            	      <th>Fecha/Hora</th>
+                              <th>Iniciada Por</th>
+                              <th>Cobrado por</th>
+			                  <th>Modificado</th>
+                              <th>Eliminado</th>
+			                  <th>Ver Detalle</th>
+                        </tr>
+                          </thead>
+	    <tbody>
+
+        {% for cuenta in cuentas %}
+        {% if cuenta.archivado == True %}
+        <tr>
+            <td><h4>{{cuenta.fechaCuenta}}</h4></td>
+            <td>{{cuenta.fkMesero}}</td>
+            {% if cuenta.modificado == True %}
+            <td>No aplica</td>
+            {% else %}
+            <td>{{cuenta.fkCajero}}</td>
+            {% endif %}
+            {% if cuenta.modificado == True %}
+            <td>Si</td>
+            {% else %}
+            <td>No</td>
+            {% endif %}
+            {% if cuenta.cancelado == True %}
+            <td>Si</td>
+            {% else %}
+            <td>No</td>
+            {% endif %}
+            <td><a href="{% url 'gerente:detallecue' cuenta.id %}">Detalle {{cuenta.id}}</a></td>
+            {% endif %}
+            {% endfor %}
+        </tr>
+        </tbody>
+
+
+                      </table>
+                </div>
+            </div>
+
+ </div>
+
+
+
+
+
+{%endblock contenido%}

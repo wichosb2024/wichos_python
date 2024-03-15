@@ -1,0 +1,38 @@
+{% extends "base/basePlantilla.html" %}
+{% block nav %}
+<header id="header" class="header fixed-top">
+	<div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+		{% block index %}
+		<a href="{% url 'caja:indexcajero' %}" class="logo d-flex align-items-center">
+		{% endblock index %}
+			<br>
+			<span>INICIO</span>
+		</a>
+		<nav id="navbar" class="navbar">
+			<ul >		
+				{%block estado%}
+				<li style="float:right">
+					<li><a href="{%  url "caja:iniciarVenta"%}">REGISTRAR VENTA</a></li>
+				</li>
+				<li >
+					<a href="{%  url "caja:estadores"%}" class="button">ESTADO DEL RESTAURANTE	</a>
+				</li>				
+				{%endblock estado%}
+				{%block registro%}
+				
+				{%endblock registro%}
+				{%block logout%}
+				<li class="salir">
+					<a href="{%  url "ingreso:logout"%}">SALIR</a>
+				</li>
+				{%endblock logout%}
+			</ul>
+		<i class="bi bi-list mobile-nav-toggle"></i>
+		</nav>
+	</div>
+</header>
+{% endblock nav %}
+{%block navegacion%}
+{%endblock navegacion%}
+{% block contenido %}{% endblock contenido %}
+  

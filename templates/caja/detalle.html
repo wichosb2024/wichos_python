@@ -1,0 +1,90 @@
+{%extends "base/base.html"%}
+{%block contenido%}
+
+
+<link rel="stylesheet" type="text/css" href="/static/css/estilo.css"/>
+	<html>
+
+	
+
+
+<body>
+ <div class="contenedor">
+            <div id="pestanas">
+                <ul id=lista>
+                    <li id="pestana1"><a href='javascript:cambiarPestanna(pestanas,pestana1);'>Pedidosl</a></li>
+                </ul>
+            </div>
+            <div id="contenidopestanas">
+                <div id="cpestana1">
+  <table id="tabla2" class="table table-bordered" border="1" bgcolor="white">
+
+	<thead>
+		<tr>
+			<td>Cliente/Prioridad</td>
+			<td>Estado</td>
+			<td>Imprimir Factura</td>
+			<td>Ver Detalle</td>
+			<td>Total</td>
+		</tr>
+	</thead>
+	<tbody>
+
+	{% for cuenta in cuentas %}
+		<tr>
+			{% if cuenta.fkMesa == null %}
+			<td style="background-color:powderblue;">{{ cuenta.cliente }}</td>
+			{% else %}
+			<td style="background-color:lightgreen;">Mesa {{ cuenta.fkMesa.numMesa }}</td>
+			{% endif %}
+			<td style='border: inset 0pt'></td>
+			<td><a href=>Imprimir</a></td>
+			<td><a href=>Detalle</a></td>
+			<td>{{cuenta.total}}</td>
+	{% for pedido in pedidos %}
+	{% if pedido.fkCuenta.cliente == cuenta.cliente and pedido.fkCuenta.fkMesa == null %}
+			<tr>
+		{% if pedido.prioridad != 0 %}
+			<td style='border: inset 0pt'>{{pedido.prioridad}}</td>
+		{% else %}
+		<td style='border: inset 0pt'>{{pedido.prioridad}}</td>
+		{% endif %}
+			{% if pedido.enCocina == True %}
+			<td><a href=>En Cocina</a></td>
+			{% elif pedido.servido == True %}
+			<td><a href=>Servido</a></td>
+			{% else %}
+			<td><a href=>En espera para entrar a cocina</a></td>
+			{% endif %}
+			</tr>
+	{% else %}
+	{% if pedido.fkCuenta.fkMesa.numMesa == cuenta.fkMesa.numMesa and pedido.fkCuenta.cliente == null %}
+			<tr>
+			{% if pedido.prioridad != 0 %}
+			<td style='border: inset 0pt'>{{pedido.prioridad}}</td>
+			{% else %}
+			<td style='border: inset 0pt'>{{pedido.prioridad}}</td>
+			{% endif %}
+			{% if pedido.enCocina == True %}
+			<td><a href=>En Cocina</a></td>
+			{% elif pedido.servido == True %}
+			<td><a href=>Servido</a></td>
+			{% else %}
+			<td><a href=>En espera para entrar a cocina</a></td>
+			{% endif %}
+			</tr>
+	{% endif %}
+	{% endif %}
+
+	{% endfor %}
+
+	{% endfor %}
+
+	</tbody>
+</table>
+	</div>
+</div>
+</div>
+</body>
+</html>
+{%endblock contenido%}

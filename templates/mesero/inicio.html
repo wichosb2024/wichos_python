@@ -1,0 +1,81 @@
+{% extends "caja/cajeroIndex.html" %}
+{%block estado%}
+{%endblock estado%}
+{%block refresh%}
+<script>
+	setTimeout('document.location.reload()',28000);
+</script>
+{%endblock refresh%}
+
+{%block inicio%}
+	<li style="float:right" class="inicio"><a href="{%  url "caja:indexmes"%}">Pedidos</a></li>
+{%endblock inicio%}
+
+{%block registro%}
+	<li style="float:right"><a href="{%  url "caja:iniciarVenta"%}">REGISTRAR VENTA</a></li>
+{%endblock registro%}
+
+{% block index %}
+	<a href="{% url 'caja:indexmes' %}" class="logo d-flex align-items-center">
+{% endblock index %}
+
+{%block numero1%}
+	<td style="width:300px">Estado</td>
+{%endblock numero1%}
+
+{% block diferencia %}
+	{% for pedido in pedidos %}
+		<tr>
+			<table class="blueTable" id="cuentas"  border="1">
+				<tr>
+					{% if pedido.cuenta.fkMesa != null %}
+						<td style="background-color:lightgreen;" ><h3>Mesa: {{ pedido.cuenta.fkMesa.id }}</h3></td>
+					{% elif pedido.cuenta.delivery == True %}
+						<td style="background-color:#D50FD2;"><h3>{{ pedido.cuenta.cliente }}</h3></td>
+					{% else %}
+						<td style="background-color:orange;"><h3> {{ pedido.cuenta.cliente }}</h3></td>
+					{% endif %}	
+					<td style="width:100px">
+						<a href="{% url 'caja:cobrar' pedido.cuenta.id %}" ><button class="boton2">Ver detalle</button></a>
+					</td>
+				</tr>	
+			</table>
+		</tr>
+		<tr>
+			<td style="width:600px">
+				<table class="blueTable" id="cuentas" border="0">
+
+					{% for pedido in pedido.pedido %}
+							<tr>
+								{% if pedido.prioridad != 0 %}
+								<td style="background-color:#EEA990; width:40%">Alta <div style="display:none">{{ pedido.fkCuenta.fkMesa.id }} {{ pedido.fkCuenta.cliente}} </div>  </td>
+								{% else %}
+									<td style="border: inset 0pt;width:40%">Baja <div style="display:none">{{ pedido.fkCuenta.fkMesa.id }} {{ pedido.fkCuenta.cliente}} </div></td>
+								{% endif %}
+								<td>
+									<table>
+										<td><div style="display:none">{{ pedido.fkCuenta.fkMesa.id }} {{ pedido.fkCuenta.cliente}} </div>
+											{% if pedido.paraLlevar == True %}
+												<img src="/static/img/Auto.png" width="30px" height="30px">
+											{% else %}
+												<img src="/static/img/Mesa.png" width="30px" height="30px">
+											{% endif %}
+										</td>
+										{% if pedido.enCocina == True %}
+											<td><div style="display:none">{{ pedido.fkCuenta.fkMesa.id }} {{ pedido.fkCuenta.cliente}} </div>
+												<a href="{% url 'caja:lin' pedido.id %}" rel="get:id=10" rev="abcwin[500,auto]">En Espera/Cocina</a>
+											</td>
+										{% else %}
+											<td>
+												<a href="{% url 'caja:lin' pedido.id %}" rel="get:id=10" rev="abcwin[500,auto]">Servido</a>
+											</td>
+										{% endif %} 
+									</table>
+								</td>
+							</tr>
+					{% endfor %}
+				</table>
+			</td>
+		</tr>
+	{% endfor %}
+{% endblock diferencia %}
